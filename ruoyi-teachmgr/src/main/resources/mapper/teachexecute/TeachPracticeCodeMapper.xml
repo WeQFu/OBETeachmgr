@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachexecute.mapper.TeachPracticeCodeMapper">
+    
+    <resultMap type="TeachPracticeCode" id="TeachPracticeCodeResult">
+        <result property="practiceCodeId"    column="practice_code_id"    />
+        <result property="practiceSemester"    column="practice_semester"    />
+        <result property="practicePlanId"    column="practice_plan_id"    />
+        <result property="practiceName"    column="practice_name"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="practiceWeight"    column="practice_weight"    />
+        <result property="practiceGoal"    column="practice_goal"    />
+        <result property="practiceClaim"    column="practice_claim"    />
+        <result property="practiceSolution"    column="practice_solution"    />
+        <result property="practiceTest"    column="practice_test"    />
+        <result property="submitTime"    column="submit_time"    />
+        <result property="evaluateStatus"    column="evaluate_status"    />
+        <result property="practiceEvaluation"    column="practice_evaluation"    />
+        <result property="practiceScore"    column="practice_score"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachPracticeCodeVo">
+        select practice_code_id, practice_semester, practice_plan_id, practice_name, course_name, chapter_name, course_target_name, practice_weight, practice_goal, practice_claim, practice_solution, practice_test, submit_time, evaluate_status, practice_evaluation, practice_score, del_flag, create_by, create_time, update_by, update_time, remark from teach_practice_code
+    </sql>
+
+    <select id="selectTeachPracticeCodeList" parameterType="TeachPracticeCode" resultMap="TeachPracticeCodeResult">
+        <include refid="selectTeachPracticeCodeVo"/>
+        <where>  
+            <if test="practiceSemester != null  and practiceSemester != ''"> and practice_semester = #{practiceSemester}</if>
+            <if test="practiceName != null  and practiceName != ''"> and practice_name like concat('%', #{practiceName}, '%')</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="evaluateStatus != null  and evaluateStatus != ''"> and evaluate_status = #{evaluateStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachPracticeCodeByPracticeCodeId" parameterType="Long" resultMap="TeachPracticeCodeResult">
+        <include refid="selectTeachPracticeCodeVo"/>
+        where practice_code_id = #{practiceCodeId}
+    </select>
+        
+    <insert id="insertTeachPracticeCode" parameterType="TeachPracticeCode" useGeneratedKeys="true" keyProperty="practiceCodeId">
+        insert into teach_practice_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="practiceSemester != null">practice_semester,</if>
+            <if test="practicePlanId != null">practice_plan_id,</if>
+            <if test="practiceName != null">practice_name,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="practiceWeight != null">practice_weight,</if>
+            <if test="practiceGoal != null">practice_goal,</if>
+            <if test="practiceClaim != null">practice_claim,</if>
+            <if test="practiceSolution != null">practice_solution,</if>
+            <if test="practiceTest != null">practice_test,</if>
+            <if test="submitTime != null">submit_time,</if>
+            <if test="evaluateStatus != null">evaluate_status,</if>
+            <if test="practiceEvaluation != null">practice_evaluation,</if>
+            <if test="practiceScore != null">practice_score,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="practiceSemester != null">#{practiceSemester},</if>
+            <if test="practicePlanId != null">#{practicePlanId},</if>
+            <if test="practiceName != null">#{practiceName},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="practiceWeight != null">#{practiceWeight},</if>
+            <if test="practiceGoal != null">#{practiceGoal},</if>
+            <if test="practiceClaim != null">#{practiceClaim},</if>
+            <if test="practiceSolution != null">#{practiceSolution},</if>
+            <if test="practiceTest != null">#{practiceTest},</if>
+            <if test="submitTime != null">#{submitTime},</if>
+            <if test="evaluateStatus != null">#{evaluateStatus},</if>
+            <if test="practiceEvaluation != null">#{practiceEvaluation},</if>
+            <if test="practiceScore != null">#{practiceScore},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachPracticeCode" parameterType="TeachPracticeCode">
+        update teach_practice_code
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="practiceSemester != null">practice_semester = #{practiceSemester},</if>
+            <if test="practicePlanId != null">practice_plan_id = #{practicePlanId},</if>
+            <if test="practiceName != null">practice_name = #{practiceName},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="practiceWeight != null">practice_weight = #{practiceWeight},</if>
+            <if test="practiceGoal != null">practice_goal = #{practiceGoal},</if>
+            <if test="practiceClaim != null">practice_claim = #{practiceClaim},</if>
+            <if test="practiceSolution != null">practice_solution = #{practiceSolution},</if>
+            <if test="practiceTest != null">practice_test = #{practiceTest},</if>
+            <if test="submitTime != null">submit_time = #{submitTime},</if>
+            <if test="evaluateStatus != null">evaluate_status = #{evaluateStatus},</if>
+            <if test="practiceEvaluation != null">practice_evaluation = #{practiceEvaluation},</if>
+            <if test="practiceScore != null">practice_score = #{practiceScore},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where practice_code_id = #{practiceCodeId}
+    </update>
+
+    <delete id="deleteTeachPracticeCodeByPracticeCodeId" parameterType="Long">
+        delete from teach_practice_code where practice_code_id = #{practiceCodeId}
+    </delete>
+
+    <delete id="deleteTeachPracticeCodeByPracticeCodeIds" parameterType="String">
+        delete from teach_practice_code where practice_code_id in 
+        <foreach item="practiceCodeId" collection="array" open="(" separator="," close=")">
+            #{practiceCodeId}
+        </foreach>
+    </delete>
+</mapper>

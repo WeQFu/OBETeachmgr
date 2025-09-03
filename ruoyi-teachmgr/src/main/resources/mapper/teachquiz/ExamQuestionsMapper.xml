@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachquiz.mapper.ExamQuestionsMapper">
+    
+    <resultMap type="ExamQuestions" id="ExamQuestionsResult">
+        <result property="questionId"    column="question_id"    />
+        <result property="questionsTypeId"    column="questions_type_id"    />
+        <result property="questionTypeName"    column="question_type_name"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="chapterSubId"    column="chapter_sub_id"    />
+        <result property="chapterSubName"    column="chapter_sub_name"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="questionType"    column="question_type"    />
+        <result property="questionContent"    column="question_content"    />
+        <result property="evaluateType"    column="evaluate_type"    />
+        <result property="questionAnswer"    column="question_answer"    />
+        <result property="questionAdditional"    column="question_additional"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectExamQuestionsVo">
+        select question_id, questions_type_id, question_type_name, course_name, chapter_id, chapter_name, chapter_sub_id, chapter_sub_name, course_target_name, question_type, question_content, evaluate_type, question_answer, question_additional, del_flag, create_by, create_time, update_by, update_time, remark from exam_questions
+    </sql>
+
+    <select id="selectExamQuestionsList" parameterType="ExamQuestions" resultMap="ExamQuestionsResult">
+        <include refid="selectExamQuestionsVo"/>
+        <where>  
+            <if test="questionsTypeId != null "> and questions_type_id = #{questionsTypeId}</if>
+            <if test="questionTypeName != null  and questionTypeName != ''"> and question_type_name like concat('%', #{questionTypeName}, '%')</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="chapterId != null "> and chapter_id = #{chapterId}</if>
+            <if test="chapterName != null  and chapterName != ''"> and chapter_name like concat('%', #{chapterName}, '%')</if>
+            <if test="chapterSubId != null "> and chapter_sub_id = #{chapterSubId}</if>
+            <if test="chapterSubName != null  and chapterSubName != ''"> and chapter_sub_name like concat('%', #{chapterSubName}, '%')</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="questionType != null  and questionType != ''"> and question_type = #{questionType}</if>
+            <if test="questionContent != null  and questionContent != ''"> and question_content = #{questionContent}</if>
+            <if test="evaluateType != null  and evaluateType != ''"> and evaluate_type = #{evaluateType}</if>
+            <if test="questionAnswer != null  and questionAnswer != ''"> and question_answer = #{questionAnswer}</if>
+            <if test="questionAdditional != null  and questionAdditional != ''"> and question_additional = #{questionAdditional}</if>
+        </where>
+    </select>
+    
+    <select id="selectExamQuestionsByQuestionId" parameterType="Long" resultMap="ExamQuestionsResult">
+        <include refid="selectExamQuestionsVo"/>
+        where question_id = #{questionId}
+    </select>
+        
+    <insert id="insertExamQuestions" parameterType="ExamQuestions" useGeneratedKeys="true" keyProperty="questionId">
+        insert into exam_questions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="questionsTypeId != null">questions_type_id,</if>
+            <if test="questionTypeName != null">question_type_name,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="chapterId != null">chapter_id,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="chapterSubId != null">chapter_sub_id,</if>
+            <if test="chapterSubName != null">chapter_sub_name,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="questionType != null">question_type,</if>
+            <if test="questionContent != null">question_content,</if>
+            <if test="evaluateType != null">evaluate_type,</if>
+            <if test="questionAnswer != null">question_answer,</if>
+            <if test="questionAdditional != null">question_additional,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="questionsTypeId != null">#{questionsTypeId},</if>
+            <if test="questionTypeName != null">#{questionTypeName},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="chapterId != null">#{chapterId},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="chapterSubId != null">#{chapterSubId},</if>
+            <if test="chapterSubName != null">#{chapterSubName},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="questionType != null">#{questionType},</if>
+            <if test="questionContent != null">#{questionContent},</if>
+            <if test="evaluateType != null">#{evaluateType},</if>
+            <if test="questionAnswer != null">#{questionAnswer},</if>
+            <if test="questionAdditional != null">#{questionAdditional},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamQuestions" parameterType="ExamQuestions">
+        update exam_questions
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="questionsTypeId != null">questions_type_id = #{questionsTypeId},</if>
+            <if test="questionTypeName != null">question_type_name = #{questionTypeName},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="chapterId != null">chapter_id = #{chapterId},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="chapterSubId != null">chapter_sub_id = #{chapterSubId},</if>
+            <if test="chapterSubName != null">chapter_sub_name = #{chapterSubName},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="questionType != null">question_type = #{questionType},</if>
+            <if test="questionContent != null">question_content = #{questionContent},</if>
+            <if test="evaluateType != null">evaluate_type = #{evaluateType},</if>
+            <if test="questionAnswer != null">question_answer = #{questionAnswer},</if>
+            <if test="questionAdditional != null">question_additional = #{questionAdditional},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where question_id = #{questionId}
+    </update>
+
+    <delete id="deleteExamQuestionsByQuestionId" parameterType="Long">
+        delete from exam_questions where question_id = #{questionId}
+    </delete>
+
+    <delete id="deleteExamQuestionsByQuestionIds" parameterType="String">
+        delete from exam_questions where question_id in 
+        <foreach item="questionId" collection="array" open="(" separator="," close=")">
+            #{questionId}
+        </foreach>
+    </delete>
+</mapper>

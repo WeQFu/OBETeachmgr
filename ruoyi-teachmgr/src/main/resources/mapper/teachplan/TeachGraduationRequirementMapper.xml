@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachGraduationRequirementMapper">
+    
+    <resultMap type="TeachGraduationRequirement" id="TeachGraduationRequirementResult">
+        <result property="requirementId"    column="requirement_id"    />
+        <result property="requirementPid"    column="requirement_pid"    />
+        <result property="ancestors"    column="ancestors"    />
+        <result property="requirementName"    column="requirement_name"    />
+        <result property="traintargetIds"    column="traintarget_ids"    />
+        <result property="requirementContent"    column="requirement_content"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachGraduationRequirementVo">
+        select requirement_id, requirement_pid, ancestors, requirement_name, traintarget_ids, requirement_content, order_num, del_flag, create_by, create_time, update_by, update_time, remark from teach_graduation_requirement
+    </sql>
+
+    <select id="selectTeachGraduationRequirementList" parameterType="TeachGraduationRequirement" resultMap="TeachGraduationRequirementResult">
+        <include refid="selectTeachGraduationRequirementVo"/>
+        <where>  
+            <if test="requirementPid != null "> and requirement_pid = #{requirementPid}</if>
+            <if test="ancestors != null  and ancestors != ''"> and ancestors = #{ancestors}</if>
+            <if test="requirementName != null  and requirementName != ''"> and requirement_name like concat('%', #{requirementName}, '%')</if>
+            <if test="traintargetIds != null  and traintargetIds != ''"> and traintarget_ids = #{traintargetIds}</if>
+            <if test="requirementContent != null  and requirementContent != ''"> and requirement_content = #{requirementContent}</if>
+            <if test="orderNum != null "> and order_num = #{orderNum}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachGraduationRequirementByRequirementId" parameterType="Long" resultMap="TeachGraduationRequirementResult">
+        <include refid="selectTeachGraduationRequirementVo"/>
+        where requirement_id = #{requirementId}
+    </select>
+        
+    <insert id="insertTeachGraduationRequirement" parameterType="TeachGraduationRequirement" useGeneratedKeys="true" keyProperty="requirementId">
+        insert into teach_graduation_requirement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="requirementPid != null">requirement_pid,</if>
+            <if test="ancestors != null">ancestors,</if>
+            <if test="requirementName != null">requirement_name,</if>
+            <if test="traintargetIds != null">traintarget_ids,</if>
+            <if test="requirementContent != null">requirement_content,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="requirementPid != null">#{requirementPid},</if>
+            <if test="ancestors != null">#{ancestors},</if>
+            <if test="requirementName != null">#{requirementName},</if>
+            <if test="traintargetIds != null">#{traintargetIds},</if>
+            <if test="requirementContent != null">#{requirementContent},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachGraduationRequirement" parameterType="TeachGraduationRequirement">
+        update teach_graduation_requirement
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="requirementPid != null">requirement_pid = #{requirementPid},</if>
+            <if test="ancestors != null">ancestors = #{ancestors},</if>
+            <if test="requirementName != null">requirement_name = #{requirementName},</if>
+            <if test="traintargetIds != null">traintarget_ids = #{traintargetIds},</if>
+            <if test="requirementContent != null">requirement_content = #{requirementContent},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where requirement_id = #{requirementId}
+    </update>
+
+    <delete id="deleteTeachGraduationRequirementByRequirementId" parameterType="Long">
+        delete from teach_graduation_requirement where requirement_id = #{requirementId}
+    </delete>
+
+    <delete id="deleteTeachGraduationRequirementByRequirementIds" parameterType="String">
+        delete from teach_graduation_requirement where requirement_id in 
+        <foreach item="requirementId" collection="array" open="(" separator="," close=")">
+            #{requirementId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachresult.mapper.TeachAchievementDegreeMapper">
+    
+    <resultMap type="TeachAchievementDegree" id="TeachAchievementDegreeResult">
+        <result property="achievDegreeId"    column="achiev_degree_id"    />
+        <result property="courseSemester"    column="course_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="graduationRequirementId"    column="graduation_requirement_id"    />
+        <result property="graduationRequirementName"    column="graduation_requirement_name"    />
+        <result property="graduationRequirementContent"    column="graduation_requirement_content"    />
+        <result property="graduationRequirementSubId"    column="graduation_requirement_sub_id"    />
+        <result property="graduationRequirementSubName"    column="graduation_requirement_sub_name"    />
+        <result property="graduationRequirementSubContent"    column="graduation_requirement_sub_content"    />
+        <result property="courseTargetId"    column="course_target_id"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="courseTargetContent"    column="course_target_content"    />
+        <result property="achieveDegree1"    column="achieve_degree1"    />
+        <result property="achieveDegree2"    column="achieve_degree2"    />
+        <result property="achieveDegree3"    column="achieve_degree3"    />
+        <result property="difcultDegree"    column="difcult_degree"    />
+        <result property="markDistribute"    column="mark_distribute"    />
+        <result property="judgeRational"    column="judge_rational"    />
+        <result property="achieveSituation"    column="achieve_situation"    />
+        <result property="improveMethod"    column="improve_method"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachAchievementDegreeVo">
+        select achiev_degree_id, course_semester, course_id, course_name, graduation_requirement_id, graduation_requirement_name, graduation_requirement_content, graduation_requirement_sub_id, graduation_requirement_sub_name, graduation_requirement_sub_content, course_target_id, course_target_name, course_target_content, achieve_degree1, achieve_degree2, achieve_degree3, difcult_degree, mark_distribute, judge_rational, achieve_situation, improve_method, del_flag, create_by, create_time, update_by, update_time, remark from teach_achievement_degree
+    </sql>
+
+    <select id="selectTeachAchievementDegreeList" parameterType="TeachAchievementDegree" resultMap="TeachAchievementDegreeResult">
+        <include refid="selectTeachAchievementDegreeVo"/>
+        <where>  
+            <if test="courseSemester != null  and courseSemester != ''"> and course_semester = #{courseSemester}</if>
+            <if test="courseId != null "> and course_id like concat('%', #{courseId}, '%')</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="graduationRequirementId != null "> and graduation_requirement_id = #{graduationRequirementId}</if>
+            <if test="graduationRequirementName != null  and graduationRequirementName != ''"> and graduation_requirement_name like concat('%', #{graduationRequirementName}, '%')</if>
+            <if test="graduationRequirementContent != null  and graduationRequirementContent != ''"> and graduation_requirement_content like concat('%', #{graduationRequirementContent}, '%')</if>
+            <if test="graduationRequirementSubId != null "> and graduation_requirement_sub_id = #{graduationRequirementSubId}</if>
+            <if test="graduationRequirementSubName != null  and graduationRequirementSubName != ''"> and graduation_requirement_sub_name like concat('%', #{graduationRequirementSubName}, '%')</if>
+            <if test="graduationRequirementSubContent != null  and graduationRequirementSubContent != ''"> and graduation_requirement_sub_content like concat('%', #{graduationRequirementSubContent}, '%')</if>
+            <if test="courseTargetId != null "> and course_target_id = #{courseTargetId}</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="courseTargetContent != null  and courseTargetContent != ''"> and course_target_content like concat('%', #{courseTargetContent}, '%')</if>
+            <if test="achieveDegree1 != null "> and achieve_degree1 = #{achieveDegree1}</if>
+            <if test="achieveDegree2 != null "> and achieve_degree2 = #{achieveDegree2}</if>
+            <if test="achieveDegree3 != null "> and achieve_degree3 = #{achieveDegree3}</if>
+            <if test="difcultDegree != null  and difcultDegree != ''"> and difcult_degree = #{difcultDegree}</if>
+            <if test="markDistribute != null  and markDistribute != ''"> and mark_distribute = #{markDistribute}</if>
+            <if test="judgeRational != null  and judgeRational != ''"> and judge_rational = #{judgeRational}</if>
+            <if test="achieveSituation != null  and achieveSituation != ''"> and achieve_situation = #{achieveSituation}</if>
+            <if test="improveMethod != null  and improveMethod != ''"> and improve_method = #{improveMethod}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachAchievementDegreeByAchievDegreeId" parameterType="Long" resultMap="TeachAchievementDegreeResult">
+        <include refid="selectTeachAchievementDegreeVo"/>
+        where achiev_degree_id = #{achievDegreeId}
+    </select>
+        
+    <insert id="insertTeachAchievementDegree" parameterType="TeachAchievementDegree" useGeneratedKeys="true" keyProperty="achievDegreeId">
+        insert into teach_achievement_degree
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="graduationRequirementId != null">graduation_requirement_id,</if>
+            <if test="graduationRequirementName != null">graduation_requirement_name,</if>
+            <if test="graduationRequirementContent != null">graduation_requirement_content,</if>
+            <if test="graduationRequirementSubId != null">graduation_requirement_sub_id,</if>
+            <if test="graduationRequirementSubName != null">graduation_requirement_sub_name,</if>
+            <if test="graduationRequirementSubContent != null">graduation_requirement_sub_content,</if>
+            <if test="courseTargetId != null">course_target_id,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="courseTargetContent != null">course_target_content,</if>
+            <if test="achieveDegree1 != null">achieve_degree1,</if>
+            <if test="achieveDegree2 != null">achieve_degree2,</if>
+            <if test="achieveDegree3 != null">achieve_degree3,</if>
+            <if test="difcultDegree != null">difcult_degree,</if>
+            <if test="markDistribute != null">mark_distribute,</if>
+            <if test="judgeRational != null">judge_rational,</if>
+            <if test="achieveSituation != null">achieve_situation,</if>
+            <if test="improveMethod != null">improve_method,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">#{courseSemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="graduationRequirementId != null">#{graduationRequirementId},</if>
+            <if test="graduationRequirementName != null">#{graduationRequirementName},</if>
+            <if test="graduationRequirementContent != null">#{graduationRequirementContent},</if>
+            <if test="graduationRequirementSubId != null">#{graduationRequirementSubId},</if>
+            <if test="graduationRequirementSubName != null">#{graduationRequirementSubName},</if>
+            <if test="graduationRequirementSubContent != null">#{graduationRequirementSubContent},</if>
+            <if test="courseTargetId != null">#{courseTargetId},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="courseTargetContent != null">#{courseTargetContent},</if>
+            <if test="achieveDegree1 != null">#{achieveDegree1},</if>
+            <if test="achieveDegree2 != null">#{achieveDegree2},</if>
+            <if test="achieveDegree3 != null">#{achieveDegree3},</if>
+            <if test="difcultDegree != null">#{difcultDegree},</if>
+            <if test="markDistribute != null">#{markDistribute},</if>
+            <if test="judgeRational != null">#{judgeRational},</if>
+            <if test="achieveSituation != null">#{achieveSituation},</if>
+            <if test="improveMethod != null">#{improveMethod},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachAchievementDegree" parameterType="TeachAchievementDegree">
+        update teach_achievement_degree
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester = #{courseSemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="graduationRequirementId != null">graduation_requirement_id = #{graduationRequirementId},</if>
+            <if test="graduationRequirementName != null">graduation_requirement_name = #{graduationRequirementName},</if>
+            <if test="graduationRequirementContent != null">graduation_requirement_content = #{graduationRequirementContent},</if>
+            <if test="graduationRequirementSubId != null">graduation_requirement_sub_id = #{graduationRequirementSubId},</if>
+            <if test="graduationRequirementSubName != null">graduation_requirement_sub_name = #{graduationRequirementSubName},</if>
+            <if test="graduationRequirementSubContent != null">graduation_requirement_sub_content = #{graduationRequirementSubContent},</if>
+            <if test="courseTargetId != null">course_target_id = #{courseTargetId},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="courseTargetContent != null">course_target_content = #{courseTargetContent},</if>
+            <if test="achieveDegree1 != null">achieve_degree1 = #{achieveDegree1},</if>
+            <if test="achieveDegree2 != null">achieve_degree2 = #{achieveDegree2},</if>
+            <if test="achieveDegree3 != null">achieve_degree3 = #{achieveDegree3},</if>
+            <if test="difcultDegree != null">difcult_degree = #{difcultDegree},</if>
+            <if test="markDistribute != null">mark_distribute = #{markDistribute},</if>
+            <if test="judgeRational != null">judge_rational = #{judgeRational},</if>
+            <if test="achieveSituation != null">achieve_situation = #{achieveSituation},</if>
+            <if test="improveMethod != null">improve_method = #{improveMethod},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where achiev_degree_id = #{achievDegreeId}
+    </update>
+
+    <delete id="deleteTeachAchievementDegreeByAchievDegreeId" parameterType="Long">
+        delete from teach_achievement_degree where achiev_degree_id = #{achievDegreeId}
+    </delete>
+
+    <delete id="deleteTeachAchievementDegreeByAchievDegreeIds" parameterType="String">
+        delete from teach_achievement_degree where achiev_degree_id in 
+        <foreach item="achievDegreeId" collection="array" open="(" separator="," close=")">
+            #{achievDegreeId}
+        </foreach>
+    </delete>
+</mapper>

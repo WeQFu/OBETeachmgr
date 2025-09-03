@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachCourseTargetMapper">
+    
+    <resultMap type="TeachCourseTarget" id="TeachCourseTargetResult">
+        <result property="courseTargetId"    column="course_target_id"    />
+        <result property="courseSemester"    column="course_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="graduationRequirementId"    column="graduation_requirement_id"    />
+        <result property="graduationRequirementName"    column="graduation_requirement_name"    />
+        <result property="graduationRequirementContent"    column="graduation_requirement_content"    />
+        <result property="graduationRequirementSubId"    column="graduation_requirement_sub_id"    />
+        <result property="graduationRequirementSubName"    column="graduation_requirement_sub_name"    />
+        <result property="graduationRequirementSubContent"    column="graduation_requirement_sub_content"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="courseTargetContent"    column="course_target_content"    />
+        <result property="approachWay"    column="approach_way"    />
+        <result property="judgeNorm"    column="judge_norm"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachCourseTargetVo">
+        select course_target_id, course_semester, course_id, course_name, graduation_requirement_id, graduation_requirement_name, graduation_requirement_content, graduation_requirement_sub_id, graduation_requirement_sub_name, graduation_requirement_sub_content, course_target_name, course_target_content, approach_way, judge_norm, del_flag, create_by, create_time, update_by, update_time, remark from teach_course_target
+    </sql>
+
+    <select id="selectTeachCourseTargetList" parameterType="TeachCourseTarget" resultMap="TeachCourseTargetResult">
+        <include refid="selectTeachCourseTargetVo"/>
+        <where>  
+            <if test="courseSemester != null  and courseSemester != ''"> and course_semester = #{courseSemester}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="graduationRequirementId != null "> and graduation_requirement_id = #{graduationRequirementId}</if>
+            <if test="graduationRequirementName != null  and graduationRequirementName != ''"> and graduation_requirement_name like concat('%', #{graduationRequirementName}, '%')</if>
+            <if test="graduationRequirementContent != null  and graduationRequirementContent != ''"> and graduation_requirement_content = #{graduationRequirementContent}</if>
+            <if test="graduationRequirementSubId != null "> and graduation_requirement_sub_id = #{graduationRequirementSubId}</if>
+            <if test="graduationRequirementSubName != null  and graduationRequirementSubName != ''"> and graduation_requirement_sub_name like concat('%', #{graduationRequirementSubName}, '%')</if>
+            <if test="graduationRequirementSubContent != null  and graduationRequirementSubContent != ''"> and graduation_requirement_sub_content = #{graduationRequirementSubContent}</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="courseTargetContent != null  and courseTargetContent != ''"> and course_target_content = #{courseTargetContent}</if>
+            <if test="approachWay != null  and approachWay != ''"> and approach_way = #{approachWay}</if>
+            <if test="judgeNorm != null  and judgeNorm != ''"> and judge_norm = #{judgeNorm}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachCourseTargetByCourseTargetId" parameterType="Long" resultMap="TeachCourseTargetResult">
+        <include refid="selectTeachCourseTargetVo"/>
+        where course_target_id = #{courseTargetId}
+    </select>
+        
+    <insert id="insertTeachCourseTarget" parameterType="TeachCourseTarget" useGeneratedKeys="true" keyProperty="courseTargetId">
+        insert into teach_course_target
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="graduationRequirementId != null">graduation_requirement_id,</if>
+            <if test="graduationRequirementName != null">graduation_requirement_name,</if>
+            <if test="graduationRequirementContent != null">graduation_requirement_content,</if>
+            <if test="graduationRequirementSubId != null">graduation_requirement_sub_id,</if>
+            <if test="graduationRequirementSubName != null">graduation_requirement_sub_name,</if>
+            <if test="graduationRequirementSubContent != null">graduation_requirement_sub_content,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="courseTargetContent != null">course_target_content,</if>
+            <if test="approachWay != null">approach_way,</if>
+            <if test="judgeNorm != null">judge_norm,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">#{courseSemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="graduationRequirementId != null">#{graduationRequirementId},</if>
+            <if test="graduationRequirementName != null">#{graduationRequirementName},</if>
+            <if test="graduationRequirementContent != null">#{graduationRequirementContent},</if>
+            <if test="graduationRequirementSubId != null">#{graduationRequirementSubId},</if>
+            <if test="graduationRequirementSubName != null">#{graduationRequirementSubName},</if>
+            <if test="graduationRequirementSubContent != null">#{graduationRequirementSubContent},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="courseTargetContent != null">#{courseTargetContent},</if>
+            <if test="approachWay != null">#{approachWay},</if>
+            <if test="judgeNorm != null">#{judgeNorm},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachCourseTarget" parameterType="TeachCourseTarget">
+        update teach_course_target
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester = #{courseSemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="graduationRequirementId != null">graduation_requirement_id = #{graduationRequirementId},</if>
+            <if test="graduationRequirementName != null">graduation_requirement_name = #{graduationRequirementName},</if>
+            <if test="graduationRequirementContent != null">graduation_requirement_content = #{graduationRequirementContent},</if>
+            <if test="graduationRequirementSubId != null">graduation_requirement_sub_id = #{graduationRequirementSubId},</if>
+            <if test="graduationRequirementSubName != null">graduation_requirement_sub_name = #{graduationRequirementSubName},</if>
+            <if test="graduationRequirementSubContent != null">graduation_requirement_sub_content = #{graduationRequirementSubContent},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="courseTargetContent != null">course_target_content = #{courseTargetContent},</if>
+            <if test="approachWay != null">approach_way = #{approachWay},</if>
+            <if test="judgeNorm != null">judge_norm = #{judgeNorm},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where course_target_id = #{courseTargetId}
+    </update>
+
+    <delete id="deleteTeachCourseTargetByCourseTargetId" parameterType="Long">
+        delete from teach_course_target where course_target_id = #{courseTargetId}
+    </delete>
+
+    <delete id="deleteTeachCourseTargetByCourseTargetIds" parameterType="String">
+        delete from teach_course_target where course_target_id in 
+        <foreach item="courseTargetId" collection="array" open="(" separator="," close=")">
+            #{courseTargetId}
+        </foreach>
+    </delete>
+</mapper>

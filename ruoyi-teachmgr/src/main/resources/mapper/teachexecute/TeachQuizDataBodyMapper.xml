@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachexecute.mapper.TeachQuizDataBodyMapper">
+    
+    <resultMap type="TeachQuizDataBody" id="TeachQuizDataBodyResult">
+        <result property="quizDataBodyId"    column="quiz_data_body_id"    />
+        <result property="quizDataHeadId"    column="quiz_data_head_id"    />
+        <result property="questionId"    column="question_id"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="chapterSubName"    column="chapter_sub_name"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="questionType"    column="question_type"    />
+        <result property="questionContent"    column="question_content"    />
+        <result property="itemWeight"    column="item_weight"    />
+        <result property="questionScore"    column="question_score"    />
+        <result property="questionAnswer"    column="question_answer"    />
+        <result property="answerReview"    column="answer_review"    />
+        <result property="answerScore"    column="answer_score"    />
+        <result property="answerWeightScore"    column="answer_weight_score"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachQuizDataBodyVo">
+        select quiz_data_body_id, quiz_data_head_id, question_id, chapter_name, chapter_sub_name, course_target_name, question_type, question_content, item_weight, question_score, question_answer, answer_review, answer_score, answer_weight_score, del_flag, create_by, create_time, update_by, update_time, remark from teach_quiz_data_body
+    </sql>
+
+    <select id="selectTeachQuizDataBodyList" parameterType="TeachQuizDataBody" resultMap="TeachQuizDataBodyResult">
+        <include refid="selectTeachQuizDataBodyVo"/>
+        <where>  
+            <if test="quizDataHeadId != null "> and quiz_data_head_id = #{quizDataHeadId}</if>
+            <if test="questionId != null "> and question_id = #{questionId}</if>
+            <if test="chapterName != null  and chapterName != ''"> and chapter_name like concat('%', #{chapterName}, '%')</if>
+            <if test="chapterSubName != null  and chapterSubName != ''"> and chapter_sub_name like concat('%', #{chapterSubName}, '%')</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="questionType != null  and questionType != ''"> and question_type = #{questionType}</if>
+            <if test="questionContent != null  and questionContent != ''"> and question_content = #{questionContent}</if>
+            <if test="itemWeight != null "> and item_weight = #{itemWeight}</if>
+            <if test="questionScore != null "> and question_score = #{questionScore}</if>
+            <if test="questionAnswer != null  and questionAnswer != ''"> and question_answer = #{questionAnswer}</if>
+            <if test="answerReview != null  and answerReview != ''"> and answer_review = #{answerReview}</if>
+            <if test="answerScore != null "> and answer_score = #{answerScore}</if>
+            <if test="answerWeightScore != null "> and answer_weight_score = #{answerWeightScore}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachQuizDataBodyByQuizDataBodyId" parameterType="Long" resultMap="TeachQuizDataBodyResult">
+        <include refid="selectTeachQuizDataBodyVo"/>
+        where quiz_data_body_id = #{quizDataBodyId}
+    </select>
+        
+    <insert id="insertTeachQuizDataBody" parameterType="TeachQuizDataBody" useGeneratedKeys="true" keyProperty="quizDataBodyId">
+        insert into teach_quiz_data_body
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="quizDataHeadId != null">quiz_data_head_id,</if>
+            <if test="questionId != null">question_id,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="chapterSubName != null">chapter_sub_name,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="questionType != null">question_type,</if>
+            <if test="questionContent != null">question_content,</if>
+            <if test="itemWeight != null">item_weight,</if>
+            <if test="questionScore != null">question_score,</if>
+            <if test="questionAnswer != null">question_answer,</if>
+            <if test="answerReview != null">answer_review,</if>
+            <if test="answerScore != null">answer_score,</if>
+            <if test="answerWeightScore != null">answer_weight_score,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="quizDataHeadId != null">#{quizDataHeadId},</if>
+            <if test="questionId != null">#{questionId},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="chapterSubName != null">#{chapterSubName},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="questionType != null">#{questionType},</if>
+            <if test="questionContent != null">#{questionContent},</if>
+            <if test="itemWeight != null">#{itemWeight},</if>
+            <if test="questionScore != null">#{questionScore},</if>
+            <if test="questionAnswer != null">#{questionAnswer},</if>
+            <if test="answerReview != null">#{answerReview},</if>
+            <if test="answerScore != null">#{answerScore},</if>
+            <if test="answerWeightScore != null">#{answerWeightScore},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachQuizDataBody" parameterType="TeachQuizDataBody">
+        update teach_quiz_data_body
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="quizDataHeadId != null">quiz_data_head_id = #{quizDataHeadId},</if>
+            <if test="questionId != null">question_id = #{questionId},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="chapterSubName != null">chapter_sub_name = #{chapterSubName},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="questionType != null">question_type = #{questionType},</if>
+            <if test="questionContent != null">question_content = #{questionContent},</if>
+            <if test="itemWeight != null">item_weight = #{itemWeight},</if>
+            <if test="questionScore != null">question_score = #{questionScore},</if>
+            <if test="questionAnswer != null">question_answer = #{questionAnswer},</if>
+            <if test="answerReview != null">answer_review = #{answerReview},</if>
+            <if test="answerScore != null">answer_score = #{answerScore},</if>
+            <if test="answerWeightScore != null">answer_weight_score = #{answerWeightScore},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where quiz_data_body_id = #{quizDataBodyId}
+    </update>
+
+    <delete id="deleteTeachQuizDataBodyByQuizDataBodyId" parameterType="Long">
+        delete from teach_quiz_data_body where quiz_data_body_id = #{quizDataBodyId}
+    </delete>
+
+    <delete id="deleteTeachQuizDataBodyByQuizDataBodyIds" parameterType="String">
+        delete from teach_quiz_data_body where quiz_data_body_id in 
+        <foreach item="quizDataBodyId" collection="array" open="(" separator="," close=")">
+            #{quizDataBodyId}
+        </foreach>
+    </delete>
+</mapper>

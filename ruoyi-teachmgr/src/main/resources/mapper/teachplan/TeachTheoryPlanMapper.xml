@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachTheoryPlanMapper">
+    
+    <resultMap type="TeachTheoryPlan" id="TeachTheoryPlanResult">
+        <result property="theoryPlanId"    column="theory_plan_id"    />
+        <result property="theorySemester"    column="theory_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="bookChapterId"    column="book_chapter_id"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="courseTargetId"    column="course_target_id"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="courseChapterDescribe"    column="course_chapter_describe"    />
+        <result property="planTime"    column="plan_time"    />
+        <result property="weekNum"    column="week_num"    />
+        <result property="weekdayNum"    column="weekday_num"    />
+        <result property="clazzNum"    column="clazz_num"    />
+        <result property="clazzDay"    column="clazz_day"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachTheoryPlanVo">
+        select theory_plan_id, theory_semester, course_id, course_name, book_chapter_id, chapter_name, course_target_id, course_target_name, course_chapter_describe, plan_time, week_num, weekday_num, clazz_num, clazz_day, order_num, del_flag, create_by, create_time, update_by, update_time, remark from teach_theory_plan
+    </sql>
+
+    <select id="selectTeachTheoryPlanList" parameterType="TeachTheoryPlan" resultMap="TeachTheoryPlanResult">
+        <include refid="selectTeachTheoryPlanVo"/>
+        <where>  
+            <if test="theorySemester != null  and theorySemester != ''"> and theory_semester = #{theorySemester}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="chapterName != null  and chapterName != ''"> and chapter_name like concat('%', #{chapterName}, '%')</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachTheoryPlanByTheoryPlanId" parameterType="Long" resultMap="TeachTheoryPlanResult">
+        <include refid="selectTeachTheoryPlanVo"/>
+        where theory_plan_id = #{theoryPlanId}
+    </select>
+        
+    <insert id="insertTeachTheoryPlan" parameterType="TeachTheoryPlan" useGeneratedKeys="true" keyProperty="theoryPlanId">
+        insert into teach_theory_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="theorySemester != null">theory_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="bookChapterId != null">book_chapter_id,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="courseTargetId != null">course_target_id,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="courseChapterDescribe != null">course_chapter_describe,</if>
+            <if test="planTime != null">plan_time,</if>
+            <if test="weekNum != null">week_num,</if>
+            <if test="weekdayNum != null">weekday_num,</if>
+            <if test="clazzNum != null">clazz_num,</if>
+            <if test="clazzDay != null">clazz_day,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="theorySemester != null">#{theorySemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="bookChapterId != null">#{bookChapterId},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="courseTargetId != null">#{courseTargetId},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="courseChapterDescribe != null">#{courseChapterDescribe},</if>
+            <if test="planTime != null">#{planTime},</if>
+            <if test="weekNum != null">#{weekNum},</if>
+            <if test="weekdayNum != null">#{weekdayNum},</if>
+            <if test="clazzNum != null">#{clazzNum},</if>
+            <if test="clazzDay != null">#{clazzDay},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachTheoryPlan" parameterType="TeachTheoryPlan">
+        update teach_theory_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="theorySemester != null">theory_semester = #{theorySemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="bookChapterId != null">book_chapter_id = #{bookChapterId},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="courseTargetId != null">course_target_id = #{courseTargetId},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="courseChapterDescribe != null">course_chapter_describe = #{courseChapterDescribe},</if>
+            <if test="planTime != null">plan_time = #{planTime},</if>
+            <if test="weekNum != null">week_num = #{weekNum},</if>
+            <if test="weekdayNum != null">weekday_num = #{weekdayNum},</if>
+            <if test="clazzNum != null">clazz_num = #{clazzNum},</if>
+            <if test="clazzDay != null">clazz_day = #{clazzDay},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where theory_plan_id = #{theoryPlanId}
+    </update>
+
+    <delete id="deleteTeachTheoryPlanByTheoryPlanId" parameterType="Long">
+        delete from teach_theory_plan where theory_plan_id = #{theoryPlanId}
+    </delete>
+
+    <delete id="deleteTeachTheoryPlanByTheoryPlanIds" parameterType="String">
+        delete from teach_theory_plan where theory_plan_id in 
+        <foreach item="theoryPlanId" collection="array" open="(" separator="," close=")">
+            #{theoryPlanId}
+        </foreach>
+    </delete>
+</mapper>

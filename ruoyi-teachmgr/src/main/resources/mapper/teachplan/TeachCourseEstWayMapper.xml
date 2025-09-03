@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachCourseEstWayMapper">
+    
+    <resultMap type="TeachCourseEstWay" id="TeachCourseEstWayResult">
+        <result property="estWayId"    column="est_way_id"    />
+        <result property="courseSemester"    column="course_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="graduationRequirementId"    column="graduation_requirement_id"    />
+        <result property="graduationRequirementName"    column="graduation_requirement_name"    />
+        <result property="graduationRequirementContent"    column="graduation_requirement_content"    />
+        <result property="graduationRequirementSubId"    column="graduation_requirement_sub_id"    />
+        <result property="graduationRequirementSubName"    column="graduation_requirement_sub_name"    />
+        <result property="graduationRequirementSubContent"    column="graduation_requirement_sub_content"    />
+        <result property="courseTargetId"    column="course_target_id"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="courseTargetContent"    column="course_target_content"    />
+        <result property="estWay"    column="est_way"    />
+        <result property="estName"    column="est_name"    />
+        <result property="estScore"    column="est_score"    />
+        <result property="estWeight"    column="est_weight"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachCourseEstWayVo">
+        select est_way_id, course_semester, course_id, course_name, graduation_requirement_id, graduation_requirement_name, graduation_requirement_content, graduation_requirement_sub_id, graduation_requirement_sub_name, graduation_requirement_sub_content, course_target_id, course_target_name, course_target_content, est_way, est_name, est_score, est_weight, del_flag, create_by, create_time, update_by, update_time, remark from teach_course_est_way
+    </sql>
+
+    <select id="selectTeachCourseEstWayList" parameterType="TeachCourseEstWay" resultMap="TeachCourseEstWayResult">
+        <include refid="selectTeachCourseEstWayVo"/>
+        <where>  
+            <if test="courseSemester != null  and courseSemester != ''"> and course_semester = #{courseSemester}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="graduationRequirementId != null "> and graduation_requirement_id = #{graduationRequirementId}</if>
+            <if test="graduationRequirementName != null  and graduationRequirementName != ''"> and graduation_requirement_name like concat('%', #{graduationRequirementName}, '%')</if>
+            <if test="graduationRequirementContent != null  and graduationRequirementContent != ''"> and graduation_requirement_content = #{graduationRequirementContent}</if>
+            <if test="graduationRequirementSubId != null "> and graduation_requirement_sub_id = #{graduationRequirementSubId}</if>
+            <if test="graduationRequirementSubName != null  and graduationRequirementSubName != ''"> and graduation_requirement_sub_name like concat('%', #{graduationRequirementSubName}, '%')</if>
+            <if test="graduationRequirementSubContent != null  and graduationRequirementSubContent != ''"> and graduation_requirement_sub_content = #{graduationRequirementSubContent}</if>
+            <if test="courseTargetId != null "> and course_target_id = #{courseTargetId}</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="courseTargetContent != null  and courseTargetContent != ''"> and course_target_content = #{courseTargetContent}</if>
+            <if test="estWay != null  and estWay != ''"> and est_way = #{estWay}</if>
+            <if test="estName != null  and estName != ''"> and est_name like concat('%', #{estName}, '%')</if>
+            <if test="estScore != null "> and est_score = #{estScore}</if>
+            <if test="estWeight != null "> and est_weight = #{estWeight}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachCourseEstWayByEstWayId" parameterType="Long" resultMap="TeachCourseEstWayResult">
+        <include refid="selectTeachCourseEstWayVo"/>
+        where est_way_id = #{estWayId}
+    </select>
+        
+    <insert id="insertTeachCourseEstWay" parameterType="TeachCourseEstWay" useGeneratedKeys="true" keyProperty="estWayId">
+        insert into teach_course_est_way
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="graduationRequirementId != null">graduation_requirement_id,</if>
+            <if test="graduationRequirementName != null">graduation_requirement_name,</if>
+            <if test="graduationRequirementContent != null">graduation_requirement_content,</if>
+            <if test="graduationRequirementSubId != null">graduation_requirement_sub_id,</if>
+            <if test="graduationRequirementSubName != null">graduation_requirement_sub_name,</if>
+            <if test="graduationRequirementSubContent != null">graduation_requirement_sub_content,</if>
+            <if test="courseTargetId != null">course_target_id,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="courseTargetContent != null">course_target_content,</if>
+            <if test="estWay != null">est_way,</if>
+            <if test="estName != null">est_name,</if>
+            <if test="estScore != null">est_score,</if>
+            <if test="estWeight != null">est_weight,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">#{courseSemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="graduationRequirementId != null">#{graduationRequirementId},</if>
+            <if test="graduationRequirementName != null">#{graduationRequirementName},</if>
+            <if test="graduationRequirementContent != null">#{graduationRequirementContent},</if>
+            <if test="graduationRequirementSubId != null">#{graduationRequirementSubId},</if>
+            <if test="graduationRequirementSubName != null">#{graduationRequirementSubName},</if>
+            <if test="graduationRequirementSubContent != null">#{graduationRequirementSubContent},</if>
+            <if test="courseTargetId != null">#{courseTargetId},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="courseTargetContent != null">#{courseTargetContent},</if>
+            <if test="estWay != null">#{estWay},</if>
+            <if test="estName != null">#{estName},</if>
+            <if test="estScore != null">#{estScore},</if>
+            <if test="estWeight != null">#{estWeight},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachCourseEstWay" parameterType="TeachCourseEstWay">
+        update teach_course_est_way
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester = #{courseSemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="graduationRequirementId != null">graduation_requirement_id = #{graduationRequirementId},</if>
+            <if test="graduationRequirementName != null">graduation_requirement_name = #{graduationRequirementName},</if>
+            <if test="graduationRequirementContent != null">graduation_requirement_content = #{graduationRequirementContent},</if>
+            <if test="graduationRequirementSubId != null">graduation_requirement_sub_id = #{graduationRequirementSubId},</if>
+            <if test="graduationRequirementSubName != null">graduation_requirement_sub_name = #{graduationRequirementSubName},</if>
+            <if test="graduationRequirementSubContent != null">graduation_requirement_sub_content = #{graduationRequirementSubContent},</if>
+            <if test="courseTargetId != null">course_target_id = #{courseTargetId},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="courseTargetContent != null">course_target_content = #{courseTargetContent},</if>
+            <if test="estWay != null">est_way = #{estWay},</if>
+            <if test="estName != null">est_name = #{estName},</if>
+            <if test="estScore != null">est_score = #{estScore},</if>
+            <if test="estWeight != null">est_weight = #{estWeight},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where est_way_id = #{estWayId}
+    </update>
+
+    <delete id="deleteTeachCourseEstWayByEstWayId" parameterType="Long">
+        delete from teach_course_est_way where est_way_id = #{estWayId}
+    </delete>
+
+    <delete id="deleteTeachCourseEstWayByEstWayIds" parameterType="String">
+        delete from teach_course_est_way where est_way_id in 
+        <foreach item="estWayId" collection="array" open="(" separator="," close=")">
+            #{estWayId}
+        </foreach>
+    </delete>
+</mapper>

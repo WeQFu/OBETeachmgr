@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachPlanMapper">
+    
+    <resultMap type="TeachPlan" id="TeachPlanResult">
+        <result property="planId"    column="plan_id"    />
+        <result property="planSemester"    column="plan_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="planNo"    column="plan_no"    />
+        <result property="weekNo"    column="week_no"    />
+        <result property="lectureTime"    column="lecture_time"    />
+        <result property="lectureType"    column="lecture_type"    />
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="chapterSubId"    column="chapter_sub_id"    />
+        <result property="chapterSubName"    column="chapter_sub_name"    />
+        <result property="practiceId"    column="practice_id"    />
+        <result property="practiceName"    column="practice_name"    />
+        <result property="lectureMethod"    column="lecture_method"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachPlanVo">
+        select plan_id, plan_semester, course_id, course_name, plan_no, week_no, lecture_time, lecture_type, chapter_id, chapter_name, chapter_sub_id, chapter_sub_name, practice_id, practice_name, lecture_method, del_flag, create_by, create_time, update_by, update_time, remark from teach_plan
+    </sql>
+
+    <select id="selectTeachPlanList" parameterType="TeachPlan" resultMap="TeachPlanResult">
+        <include refid="selectTeachPlanVo"/>
+        <where>  
+            <if test="planSemester != null  and planSemester != ''"> and plan_semester = #{planSemester}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="planNo != null "> and plan_no = #{planNo}</if>
+            <if test="weekNo != null "> and week_no = #{weekNo}</if>
+            <if test="lectureTime != null "> and lecture_time = #{lectureTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachPlanByPlanId" parameterType="Long" resultMap="TeachPlanResult">
+        <include refid="selectTeachPlanVo"/>
+        where plan_id = #{planId}
+    </select>
+        
+    <insert id="insertTeachPlan" parameterType="TeachPlan" useGeneratedKeys="true" keyProperty="planId">
+        insert into teach_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planSemester != null">plan_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="weekNo != null">week_no,</if>
+            <if test="lectureTime != null">lecture_time,</if>
+            <if test="lectureType != null">lecture_type,</if>
+            <if test="chapterId != null">chapter_id,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="chapterSubId != null">chapter_sub_id,</if>
+            <if test="chapterSubName != null">chapter_sub_name,</if>
+            <if test="practiceId != null">practice_id,</if>
+            <if test="practiceName != null">practice_name,</if>
+            <if test="lectureMethod != null">lecture_method,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planSemester != null">#{planSemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="weekNo != null">#{weekNo},</if>
+            <if test="lectureTime != null">#{lectureTime},</if>
+            <if test="lectureType != null">#{lectureType},</if>
+            <if test="chapterId != null">#{chapterId},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="chapterSubId != null">#{chapterSubId},</if>
+            <if test="chapterSubName != null">#{chapterSubName},</if>
+            <if test="practiceId != null">#{practiceId},</if>
+            <if test="practiceName != null">#{practiceName},</if>
+            <if test="lectureMethod != null">#{lectureMethod},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachPlan" parameterType="TeachPlan">
+        update teach_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planSemester != null">plan_semester = #{planSemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="weekNo != null">week_no = #{weekNo},</if>
+            <if test="lectureTime != null">lecture_time = #{lectureTime},</if>
+            <if test="lectureType != null">lecture_type = #{lectureType},</if>
+            <if test="chapterId != null">chapter_id = #{chapterId},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="chapterSubId != null">chapter_sub_id = #{chapterSubId},</if>
+            <if test="chapterSubName != null">chapter_sub_name = #{chapterSubName},</if>
+            <if test="practiceId != null">practice_id = #{practiceId},</if>
+            <if test="practiceName != null">practice_name = #{practiceName},</if>
+            <if test="lectureMethod != null">lecture_method = #{lectureMethod},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where plan_id = #{planId}
+    </update>
+
+    <delete id="deleteTeachPlanByPlanId" parameterType="Long">
+        delete from teach_plan where plan_id = #{planId}
+    </delete>
+
+    <delete id="deleteTeachPlanByPlanIds" parameterType="String">
+        delete from teach_plan where plan_id in 
+        <foreach item="planId" collection="array" open="(" separator="," close=")">
+            #{planId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachquiz.mapper.ExamPaperMapper">
+    
+    <resultMap type="ExamPaper" id="ExamPaperResult">
+        <result property="paperId"    column="paper_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="paperSemester"    column="paper_semester"    />
+        <result property="paperType"    column="paper_type"    />
+        <result property="paperName"    column="paper_name"    />
+        <result property="paperWeight"    column="paper_weight"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <resultMap id="ExamPaperExamPaperSubResult" type="ExamPaper" extends="ExamPaperResult">
+        <collection property="examPaperSubList" notNullColumn="sub_paper_sub_id" javaType="java.util.List" resultMap="ExamPaperSubResult" />
+    </resultMap>
+
+    <resultMap type="ExamPaperSub" id="ExamPaperSubResult">
+        <result property="paperSubId"    column="sub_paper_sub_id"    />
+        <result property="paperId"    column="sub_paper_id"    />
+        <result property="questionId"    column="sub_question_id"    />
+        <result property="chapterName"    column="sub_chapter_name"    />
+        <result property="chapterSubName"    column="sub_chapter_sub_name"    />
+        <result property="courseTargetName"    column="sub_course_target_name"    />
+        <result property="questionType"    column="sub_question_type"    />
+        <result property="questionContent"    column="sub_question_content"    />
+        <result property="evaluateType"    column="sub_evaluate_type"    />
+        <result property="questionAnswer"    column="sub_question_answer"    />
+        <result property="itemWeight"    column="sub_item_weight"    />
+        <result property="questionScore"    column="sub_question_score"    />
+        <result property="delFlag"    column="sub_del_flag"    />
+        <result property="createBy"    column="sub_create_by"    />
+        <result property="createTime"    column="sub_create_time"    />
+        <result property="updateBy"    column="sub_update_by"    />
+        <result property="updateTime"    column="sub_update_time"    />
+        <result property="remark"    column="sub_remark"    />
+    </resultMap>
+
+    <sql id="selectExamPaperVo">
+        select paper_id, course_id, course_name, paper_semester, paper_type, paper_name, paper_weight, del_flag, create_by, create_time, update_by, update_time, remark from exam_paper
+    </sql>
+
+    <select id="selectExamPaperList" parameterType="ExamPaper" resultMap="ExamPaperResult">
+        <include refid="selectExamPaperVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="paperSemester != null  and paperSemester != ''"> and paper_semester = #{paperSemester}</if>
+            <if test="paperType != null  and paperType != ''"> and paper_type = #{paperType}</if>
+            <if test="paperName != null  and paperName != ''"> and paper_name like concat('%', #{paperName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectExamPaperByPaperId" parameterType="Long" resultMap="ExamPaperExamPaperSubResult">
+        select a.paper_id, a.course_id, a.course_name, a.paper_semester, a.paper_type, a.paper_name, a.paper_weight, a.del_flag, a.create_by, a.create_time, a.update_by, a.update_time, a.remark,
+ b.paper_sub_id as sub_paper_sub_id, b.paper_id as sub_paper_id, b.question_id as sub_question_id, b.chapter_name as sub_chapter_name, b.chapter_sub_name as sub_chapter_sub_name, b.course_target_name as sub_course_target_name, b.question_type as sub_question_type, b.question_content as sub_question_content, b.evaluate_type as sub_evaluate_type, b.question_answer as sub_question_answer, b.item_weight as sub_item_weight, b.question_score as sub_question_score, b.del_flag as sub_del_flag, b.create_by as sub_create_by, b.create_time as sub_create_time, b.update_by as sub_update_by, b.update_time as sub_update_time, b.remark as sub_remark
+        from exam_paper a
+        left join exam_paper_sub b on b.paper_id = a.paper_id
+        where a.paper_id = #{paperId}
+    </select>
+        
+    <insert id="insertExamPaper" parameterType="ExamPaper" useGeneratedKeys="true" keyProperty="paperId">
+        insert into exam_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="paperSemester != null">paper_semester,</if>
+            <if test="paperType != null">paper_type,</if>
+            <if test="paperName != null">paper_name,</if>
+            <if test="paperWeight != null">paper_weight,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="paperSemester != null">#{paperSemester},</if>
+            <if test="paperType != null">#{paperType},</if>
+            <if test="paperName != null">#{paperName},</if>
+            <if test="paperWeight != null">#{paperWeight},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamPaper" parameterType="ExamPaper">
+        update exam_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="paperSemester != null">paper_semester = #{paperSemester},</if>
+            <if test="paperType != null">paper_type = #{paperType},</if>
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="paperWeight != null">paper_weight = #{paperWeight},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where paper_id = #{paperId}
+    </update>
+
+    <delete id="deleteExamPaperByPaperId" parameterType="Long">
+        delete from exam_paper where paper_id = #{paperId}
+    </delete>
+
+    <delete id="deleteExamPaperByPaperIds" parameterType="String">
+        delete from exam_paper where paper_id in 
+        <foreach item="paperId" collection="array" open="(" separator="," close=")">
+            #{paperId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteExamPaperSubByPaperIds" parameterType="String">
+        delete from exam_paper_sub where paper_id in 
+        <foreach item="paperId" collection="array" open="(" separator="," close=")">
+            #{paperId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteExamPaperSubByPaperId" parameterType="Long">
+        delete from exam_paper_sub where paper_id = #{paperId}
+    </delete>
+
+    <insert id="batchExamPaperSub">
+        insert into exam_paper_sub( paper_sub_id, paper_id, question_id, chapter_name, chapter_sub_name, course_target_name, question_type, question_content, evaluate_type, question_answer, item_weight, question_score, del_flag, create_by, create_time, update_by, update_time, remark) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.paperSubId}, #{item.paperId}, #{item.questionId}, #{item.chapterName}, #{item.chapterSubName}, #{item.courseTargetName}, #{item.questionType}, #{item.questionContent}, #{item.evaluateType}, #{item.questionAnswer}, #{item.itemWeight}, #{item.questionScore}, #{item.delFlag}, #{item.createBy}, #{item.createTime}, #{item.updateBy}, #{item.updateTime}, #{item.remark})
+        </foreach>
+    </insert>
+</mapper>

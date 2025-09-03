@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachmonitor.mapper.TeachExamMonitorMapper">
+    
+    <resultMap type="TeachExamMonitor" id="TeachExamMonitorResult">
+        <result property="examMonitorId"    column="exam_monitor_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="paperId"    column="paper_id"    />
+        <result property="paperName"    column="paper_name"    />
+        <result property="examTime"    column="exam_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="cheaterName"    column="cheater_name"    />
+        <result property="clazzId"    column="clazz_id"    />
+        <result property="studentNo"    column="student_no"    />
+        <result property="cheatDescription"    column="cheat_description"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachExamMonitorVo">
+        select exam_monitor_id, user_id, dept_id, user_name, paper_id, paper_name, exam_time, start_time, end_time, cheater_name, clazz_id, student_no, cheat_description, del_flag, create_by, create_time, update_by, update_time, remark from teach_exam_monitor
+    </sql>
+
+    <select id="selectTeachExamMonitorList" parameterType="TeachExamMonitor" resultMap="TeachExamMonitorResult">
+        <include refid="selectTeachExamMonitorVo"/>
+        <where>  
+            <if test="paperName != null  and paperName != ''"> and paper_name like concat('%', #{paperName}, '%')</if>
+            <if test="cheaterName != null  and cheaterName != ''"> and cheater_name like concat('%', #{cheaterName}, '%')</if>
+            <if test="studentNo != null  and studentNo != ''"> and student_no = #{studentNo}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachExamMonitorByExamMonitorId" parameterType="Long" resultMap="TeachExamMonitorResult">
+        <include refid="selectTeachExamMonitorVo"/>
+        where exam_monitor_id = #{examMonitorId}
+    </select>
+        
+    <insert id="insertTeachExamMonitor" parameterType="TeachExamMonitor" useGeneratedKeys="true" keyProperty="examMonitorId">
+        insert into teach_exam_monitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="paperId != null">paper_id,</if>
+            <if test="paperName != null">paper_name,</if>
+            <if test="examTime != null">exam_time,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="cheaterName != null">cheater_name,</if>
+            <if test="clazzId != null">clazz_id,</if>
+            <if test="studentNo != null">student_no,</if>
+            <if test="cheatDescription != null">cheat_description,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="paperId != null">#{paperId},</if>
+            <if test="paperName != null">#{paperName},</if>
+            <if test="examTime != null">#{examTime},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="cheaterName != null">#{cheaterName},</if>
+            <if test="clazzId != null">#{clazzId},</if>
+            <if test="studentNo != null">#{studentNo},</if>
+            <if test="cheatDescription != null">#{cheatDescription},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachExamMonitor" parameterType="TeachExamMonitor">
+        update teach_exam_monitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="paperId != null">paper_id = #{paperId},</if>
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="examTime != null">exam_time = #{examTime},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="cheaterName != null">cheater_name = #{cheaterName},</if>
+            <if test="clazzId != null">clazz_id = #{clazzId},</if>
+            <if test="studentNo != null">student_no = #{studentNo},</if>
+            <if test="cheatDescription != null">cheat_description = #{cheatDescription},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where exam_monitor_id = #{examMonitorId}
+    </update>
+
+    <delete id="deleteTeachExamMonitorByExamMonitorId" parameterType="Long">
+        delete from teach_exam_monitor where exam_monitor_id = #{examMonitorId}
+    </delete>
+
+    <delete id="deleteTeachExamMonitorByExamMonitorIds" parameterType="String">
+        delete from teach_exam_monitor where exam_monitor_id in 
+        <foreach item="examMonitorId" collection="array" open="(" separator="," close=")">
+            #{examMonitorId}
+        </foreach>
+    </delete>
+</mapper>

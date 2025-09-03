@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachmonitor.mapper.TeachPlanMonitorMapper">
+    
+    <resultMap type="TeachPlanMonitor" id="TeachPlanMonitorResult">
+        <result property="planMonitorId"    column="plan_monitor_id"    />
+        <result property="planId"    column="plan_id"    />
+        <result property="planSemester"    column="plan_semester"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="planNo"    column="plan_no"    />
+        <result property="weekNo"    column="week_no"    />
+        <result property="lectureTime"    column="lecture_time"    />
+        <result property="lectureType"    column="lecture_type"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="chapterSubName"    column="chapter_sub_name"    />
+        <result property="practiceName"    column="practice_name"    />
+        <result property="realTime"    column="real_time"    />
+        <result property="realType"    column="real_type"    />
+        <result property="realChapterName"    column="real_chapter_name"    />
+        <result property="realChapterSubName"    column="real_chapter_sub_name"    />
+        <result property="realPracticeName"    column="real_practice_name"    />
+        <result property="isEqual"    column="is_equal"    />
+        <result property="notEqualCause"    column="not_equal_cause"    />
+        <result property="meetTrouble"    column="meet_trouble"    />
+        <result property="improveMethod"    column="improve_method"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachPlanMonitorVo">
+        select plan_monitor_id, plan_id, plan_semester, course_name, plan_no, week_no, lecture_time, lecture_type, chapter_name, chapter_sub_name, practice_name, real_time, real_type, real_chapter_name, real_chapter_sub_name, real_practice_name, is_equal, not_equal_cause, meet_trouble, improve_method, del_flag, create_by, create_time, update_by, update_time, remark from teach_plan_monitor
+    </sql>
+
+    <select id="selectTeachPlanMonitorList" parameterType="TeachPlanMonitor" resultMap="TeachPlanMonitorResult">
+        <include refid="selectTeachPlanMonitorVo"/>
+        <where>  
+            <if test="planSemester != null  and planSemester != ''"> and plan_semester = #{planSemester}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachPlanMonitorByPlanMonitorId" parameterType="Long" resultMap="TeachPlanMonitorResult">
+        <include refid="selectTeachPlanMonitorVo"/>
+        where plan_monitor_id = #{planMonitorId}
+    </select>
+        
+    <insert id="insertTeachPlanMonitor" parameterType="TeachPlanMonitor" useGeneratedKeys="true" keyProperty="planMonitorId">
+        insert into teach_plan_monitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planId != null">plan_id,</if>
+            <if test="planSemester != null">plan_semester,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="weekNo != null">week_no,</if>
+            <if test="lectureTime != null">lecture_time,</if>
+            <if test="lectureType != null">lecture_type,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="chapterSubName != null">chapter_sub_name,</if>
+            <if test="practiceName != null">practice_name,</if>
+            <if test="realTime != null">real_time,</if>
+            <if test="realType != null">real_type,</if>
+            <if test="realChapterName != null">real_chapter_name,</if>
+            <if test="realChapterSubName != null">real_chapter_sub_name,</if>
+            <if test="realPracticeName != null">real_practice_name,</if>
+            <if test="isEqual != null">is_equal,</if>
+            <if test="notEqualCause != null">not_equal_cause,</if>
+            <if test="meetTrouble != null">meet_trouble,</if>
+            <if test="improveMethod != null">improve_method,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planId != null">#{planId},</if>
+            <if test="planSemester != null">#{planSemester},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="weekNo != null">#{weekNo},</if>
+            <if test="lectureTime != null">#{lectureTime},</if>
+            <if test="lectureType != null">#{lectureType},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="chapterSubName != null">#{chapterSubName},</if>
+            <if test="practiceName != null">#{practiceName},</if>
+            <if test="realTime != null">#{realTime},</if>
+            <if test="realType != null">#{realType},</if>
+            <if test="realChapterName != null">#{realChapterName},</if>
+            <if test="realChapterSubName != null">#{realChapterSubName},</if>
+            <if test="realPracticeName != null">#{realPracticeName},</if>
+            <if test="isEqual != null">#{isEqual},</if>
+            <if test="notEqualCause != null">#{notEqualCause},</if>
+            <if test="meetTrouble != null">#{meetTrouble},</if>
+            <if test="improveMethod != null">#{improveMethod},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachPlanMonitor" parameterType="TeachPlanMonitor">
+        update teach_plan_monitor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="planSemester != null">plan_semester = #{planSemester},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="weekNo != null">week_no = #{weekNo},</if>
+            <if test="lectureTime != null">lecture_time = #{lectureTime},</if>
+            <if test="lectureType != null">lecture_type = #{lectureType},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="chapterSubName != null">chapter_sub_name = #{chapterSubName},</if>
+            <if test="practiceName != null">practice_name = #{practiceName},</if>
+            <if test="realTime != null">real_time = #{realTime},</if>
+            <if test="realType != null">real_type = #{realType},</if>
+            <if test="realChapterName != null">real_chapter_name = #{realChapterName},</if>
+            <if test="realChapterSubName != null">real_chapter_sub_name = #{realChapterSubName},</if>
+            <if test="realPracticeName != null">real_practice_name = #{realPracticeName},</if>
+            <if test="isEqual != null">is_equal = #{isEqual},</if>
+            <if test="notEqualCause != null">not_equal_cause = #{notEqualCause},</if>
+            <if test="meetTrouble != null">meet_trouble = #{meetTrouble},</if>
+            <if test="improveMethod != null">improve_method = #{improveMethod},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where plan_monitor_id = #{planMonitorId}
+    </update>
+
+    <delete id="deleteTeachPlanMonitorByPlanMonitorId" parameterType="Long">
+        delete from teach_plan_monitor where plan_monitor_id = #{planMonitorId}
+    </delete>
+
+    <delete id="deleteTeachPlanMonitorByPlanMonitorIds" parameterType="String">
+        delete from teach_plan_monitor where plan_monitor_id in 
+        <foreach item="planMonitorId" collection="array" open="(" separator="," close=")">
+            #{planMonitorId}
+        </foreach>
+    </delete>
+</mapper>

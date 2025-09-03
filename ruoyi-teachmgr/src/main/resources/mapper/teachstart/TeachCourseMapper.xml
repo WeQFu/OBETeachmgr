@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachstart.mapper.TeachCourseMapper">
+    
+    <resultMap type="TeachCourse" id="TeachCourseResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="courseCode"    column="course_code"    />
+        <result property="courseCredit"    column="course_credit"    />
+        <result property="coursePeriod"    column="course_period"    />
+        <result property="courseSemester"    column="course_semester"    />
+        <result property="courseIntroduce"    column="course_introduce"    />
+        <result property="courseEnIntroduce"    column="course_en_introduce"    />
+        <result property="courseType"    column="course_type"    />
+        <result property="specialityId"    column="speciality_id"    />
+        <result property="specialityName"    column="speciality_name"    />
+        <result property="choiceBooks"    column="choice_books"    />
+        <result property="referenceBooks"    column="reference_books"    />
+        <result property="aheadCourse"    column="ahead_course"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachCourseVo">
+        select course_id, course_name, course_code, course_credit, course_period, course_semester, course_introduce, course_en_introduce, course_type, speciality_id, speciality_name, choice_books, reference_books, ahead_course, del_flag, create_by, create_time, update_by, update_time, remark from teach_course
+    </sql>
+
+    <select id="selectTeachCourseList" parameterType="TeachCourse" resultMap="TeachCourseResult">
+        <include refid="selectTeachCourseVo"/>
+        <where>  
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="courseCode != null  and courseCode != ''"> and course_code = #{courseCode}</if>
+            <if test="courseCredit != null "> and course_credit = #{courseCredit}</if>
+            <if test="coursePeriod != null "> and course_period = #{coursePeriod}</if>
+            <if test="courseSemester != null  and courseSemester != ''"> and course_semester = #{courseSemester}</if>
+            <if test="courseIntroduce != null  and courseIntroduce != ''"> and course_introduce = #{courseIntroduce}</if>
+            <if test="courseEnIntroduce != null  and courseEnIntroduce != ''"> and course_en_introduce = #{courseEnIntroduce}</if>
+            <if test="courseType != null  and courseType != ''"> and course_type = #{courseType}</if>
+            <if test="specialityId != null "> and speciality_id = #{specialityId}</if>
+            <if test="specialityName != null  and specialityName != ''"> and speciality_name like concat('%', #{specialityName}, '%')</if>
+            <if test="choiceBooks != null  and choiceBooks != ''"> and choice_books = #{choiceBooks}</if>
+            <if test="referenceBooks != null  and referenceBooks != ''"> and reference_books = #{referenceBooks}</if>
+            <if test="aheadCourse != null  and aheadCourse != ''"> and ahead_course = #{aheadCourse}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachCourseByCourseId" parameterType="Long" resultMap="TeachCourseResult">
+        <include refid="selectTeachCourseVo"/>
+        where course_id = #{courseId}
+    </select>
+        
+    <insert id="insertTeachCourse" parameterType="TeachCourse" useGeneratedKeys="true" keyProperty="courseId">
+        insert into teach_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseName != null">course_name,</if>
+            <if test="courseCode != null">course_code,</if>
+            <if test="courseCredit != null">course_credit,</if>
+            <if test="coursePeriod != null">course_period,</if>
+            <if test="courseSemester != null">course_semester,</if>
+            <if test="courseIntroduce != null">course_introduce,</if>
+            <if test="courseEnIntroduce != null">course_en_introduce,</if>
+            <if test="courseType != null">course_type,</if>
+            <if test="specialityId != null">speciality_id,</if>
+            <if test="specialityName != null">speciality_name,</if>
+            <if test="choiceBooks != null">choice_books,</if>
+            <if test="referenceBooks != null">reference_books,</if>
+            <if test="aheadCourse != null">ahead_course,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseName != null">#{courseName},</if>
+            <if test="courseCode != null">#{courseCode},</if>
+            <if test="courseCredit != null">#{courseCredit},</if>
+            <if test="coursePeriod != null">#{coursePeriod},</if>
+            <if test="courseSemester != null">#{courseSemester},</if>
+            <if test="courseIntroduce != null">#{courseIntroduce},</if>
+            <if test="courseEnIntroduce != null">#{courseEnIntroduce},</if>
+            <if test="courseType != null">#{courseType},</if>
+            <if test="specialityId != null">#{specialityId},</if>
+            <if test="specialityName != null">#{specialityName},</if>
+            <if test="choiceBooks != null">#{choiceBooks},</if>
+            <if test="referenceBooks != null">#{referenceBooks},</if>
+            <if test="aheadCourse != null">#{aheadCourse},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachCourse" parameterType="TeachCourse">
+        update teach_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseCode != null">course_code = #{courseCode},</if>
+            <if test="courseCredit != null">course_credit = #{courseCredit},</if>
+            <if test="coursePeriod != null">course_period = #{coursePeriod},</if>
+            <if test="courseSemester != null">course_semester = #{courseSemester},</if>
+            <if test="courseIntroduce != null">course_introduce = #{courseIntroduce},</if>
+            <if test="courseEnIntroduce != null">course_en_introduce = #{courseEnIntroduce},</if>
+            <if test="courseType != null">course_type = #{courseType},</if>
+            <if test="specialityId != null">speciality_id = #{specialityId},</if>
+            <if test="specialityName != null">speciality_name = #{specialityName},</if>
+            <if test="choiceBooks != null">choice_books = #{choiceBooks},</if>
+            <if test="referenceBooks != null">reference_books = #{referenceBooks},</if>
+            <if test="aheadCourse != null">ahead_course = #{aheadCourse},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteTeachCourseByCourseId" parameterType="Long">
+        delete from teach_course where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteTeachCourseByCourseIds" parameterType="String">
+        delete from teach_course where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+</mapper>

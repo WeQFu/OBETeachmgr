@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachOutlineMapper">
+    
+    <resultMap type="TeachOutline" id="TeachOutlineResult">
+        <result property="outlineId"    column="outline_id"    />
+        <result property="outlineSemester"    column="outline_semester"    />
+        <result property="outlineName"    column="outline_name"    />
+        <result property="outlineInfo"    column="outline_info"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseIntroduce"    column="course_introduce"    />
+        <result property="selectPropose"    column="select_propose"    />
+        <result property="requirementIds"    column="requirement_ids"    />
+        <result property="indexIds"    column="index_ids"    />
+        <result property="courseTargetIds"    column="course_target_ids"    />
+        <result property="estWayId"    column="est_way_id"    />
+        <result property="courseChapterIds"    column="course_chapter_ids"    />
+        <result property="practiceIds"    column="practice_ids"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachOutlineVo">
+        select outline_id, outline_semester, outline_name, outline_info, course_id, course_introduce, select_propose, requirement_ids, index_ids, course_target_ids, est_way_id, course_chapter_ids, practice_ids, del_flag, create_by, create_time, update_by, update_time, remark from teach_outline
+    </sql>
+
+    <select id="selectTeachOutlineList" parameterType="TeachOutline" resultMap="TeachOutlineResult">
+        <include refid="selectTeachOutlineVo"/>
+        <where>  
+            <if test="outlineSemester != null  and outlineSemester != ''"> and outline_semester = #{outlineSemester}</if>
+            <if test="outlineName != null  and outlineName != ''"> and outline_name like concat('%', #{outlineName}, '%')</if>
+            <if test="outlineInfo != null  and outlineInfo != ''"> and outline_info = #{outlineInfo}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseIntroduce != null  and courseIntroduce != ''"> and course_introduce = #{courseIntroduce}</if>
+            <if test="selectPropose != null  and selectPropose != ''"> and select_propose = #{selectPropose}</if>
+            <if test="requirementIds != null  and requirementIds != ''"> and requirement_ids = #{requirementIds}</if>
+            <if test="indexIds != null  and indexIds != ''"> and index_ids = #{indexIds}</if>
+            <if test="courseTargetIds != null  and courseTargetIds != ''"> and course_target_ids = #{courseTargetIds}</if>
+            <if test="estWayId != null "> and est_way_id = #{estWayId}</if>
+            <if test="courseChapterIds != null  and courseChapterIds != ''"> and course_chapter_ids = #{courseChapterIds}</if>
+            <if test="practiceIds != null  and practiceIds != ''"> and practice_ids = #{practiceIds}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachOutlineByOutlineId" parameterType="Long" resultMap="TeachOutlineResult">
+        <include refid="selectTeachOutlineVo"/>
+        where outline_id = #{outlineId}
+    </select>
+        
+    <insert id="insertTeachOutline" parameterType="TeachOutline" useGeneratedKeys="true" keyProperty="outlineId">
+        insert into teach_outline
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="outlineSemester != null">outline_semester,</if>
+            <if test="outlineName != null">outline_name,</if>
+            <if test="outlineInfo != null">outline_info,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseIntroduce != null">course_introduce,</if>
+            <if test="selectPropose != null">select_propose,</if>
+            <if test="requirementIds != null">requirement_ids,</if>
+            <if test="indexIds != null">index_ids,</if>
+            <if test="courseTargetIds != null">course_target_ids,</if>
+            <if test="estWayId != null">est_way_id,</if>
+            <if test="courseChapterIds != null">course_chapter_ids,</if>
+            <if test="practiceIds != null">practice_ids,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="outlineSemester != null">#{outlineSemester},</if>
+            <if test="outlineName != null">#{outlineName},</if>
+            <if test="outlineInfo != null">#{outlineInfo},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseIntroduce != null">#{courseIntroduce},</if>
+            <if test="selectPropose != null">#{selectPropose},</if>
+            <if test="requirementIds != null">#{requirementIds},</if>
+            <if test="indexIds != null">#{indexIds},</if>
+            <if test="courseTargetIds != null">#{courseTargetIds},</if>
+            <if test="estWayId != null">#{estWayId},</if>
+            <if test="courseChapterIds != null">#{courseChapterIds},</if>
+            <if test="practiceIds != null">#{practiceIds},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachOutline" parameterType="TeachOutline">
+        update teach_outline
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="outlineSemester != null">outline_semester = #{outlineSemester},</if>
+            <if test="outlineName != null">outline_name = #{outlineName},</if>
+            <if test="outlineInfo != null">outline_info = #{outlineInfo},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseIntroduce != null">course_introduce = #{courseIntroduce},</if>
+            <if test="selectPropose != null">select_propose = #{selectPropose},</if>
+            <if test="requirementIds != null">requirement_ids = #{requirementIds},</if>
+            <if test="indexIds != null">index_ids = #{indexIds},</if>
+            <if test="courseTargetIds != null">course_target_ids = #{courseTargetIds},</if>
+            <if test="estWayId != null">est_way_id = #{estWayId},</if>
+            <if test="courseChapterIds != null">course_chapter_ids = #{courseChapterIds},</if>
+            <if test="practiceIds != null">practice_ids = #{practiceIds},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where outline_id = #{outlineId}
+    </update>
+
+    <delete id="deleteTeachOutlineByOutlineId" parameterType="Long">
+        delete from teach_outline where outline_id = #{outlineId}
+    </delete>
+
+    <delete id="deleteTeachOutlineByOutlineIds" parameterType="String">
+        delete from teach_outline where outline_id in 
+        <foreach item="outlineId" collection="array" open="(" separator="," close=")">
+            #{outlineId}
+        </foreach>
+    </delete>
+
+    <!--    根据ID数组 查询所有的检校信息 -->
+<!--    <select id="selectTeachOutlineByIds" parameterType="Long" resultMap="TeachOutlineResult">-->
+<!--        <include refid="selectTeachOutlineVo" />-->
+<!--        where outline_id in-->
+<!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </select>-->
+
+</mapper>

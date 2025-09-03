@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachquiz.mapper.ExamQuestionsClazzMapper">
+    
+    <resultMap type="ExamQuestionsClazz" id="ExamQuestionsClazzResult">
+        <result property="questionsClazzId"    column="questions_clazz_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="questionsClazzName"    column="questions_clazz_name"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectExamQuestionsClazzVo">
+        select questions_clazz_id, course_id, course_name, questions_clazz_name, del_flag, create_by, create_time, update_by, update_time, remark from exam_questions_clazz
+    </sql>
+
+    <select id="selectExamQuestionsClazzList" parameterType="ExamQuestionsClazz" resultMap="ExamQuestionsClazzResult">
+        <include refid="selectExamQuestionsClazzVo"/>
+        <where>  
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="questionsClazzName != null  and questionsClazzName != ''"> and questions_clazz_name like concat('%', #{questionsClazzName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectExamQuestionsClazzByQuestionsClazzId" parameterType="Long" resultMap="ExamQuestionsClazzResult">
+        <include refid="selectExamQuestionsClazzVo"/>
+        where questions_clazz_id = #{questionsClazzId}
+    </select>
+        
+    <insert id="insertExamQuestionsClazz" parameterType="ExamQuestionsClazz" useGeneratedKeys="true" keyProperty="questionsClazzId">
+        insert into exam_questions_clazz
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="questionsClazzName != null">questions_clazz_name,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="questionsClazzName != null">#{questionsClazzName},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamQuestionsClazz" parameterType="ExamQuestionsClazz">
+        update exam_questions_clazz
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="questionsClazzName != null">questions_clazz_name = #{questionsClazzName},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where questions_clazz_id = #{questionsClazzId}
+    </update>
+
+    <delete id="deleteExamQuestionsClazzByQuestionsClazzId" parameterType="Long">
+        delete from exam_questions_clazz where questions_clazz_id = #{questionsClazzId}
+    </delete>
+
+    <delete id="deleteExamQuestionsClazzByQuestionsClazzIds" parameterType="String">
+        delete from exam_questions_clazz where questions_clazz_id in 
+        <foreach item="questionsClazzId" collection="array" open="(" separator="," close=")">
+            #{questionsClazzId}
+        </foreach>
+    </delete>
+</mapper>

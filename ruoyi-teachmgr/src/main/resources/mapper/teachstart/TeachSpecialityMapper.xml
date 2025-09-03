@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachstart.mapper.TeachSpecialityMapper">
+    
+    <resultMap type="TeachSpeciality" id="TeachSpecialityResult">
+        <result property="specialityId"    column="speciality_id"    />
+        <result property="specialityName"    column="speciality_name"    />
+        <result property="specialityIntroduce"    column="speciality_introduce"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachSpecialityVo">
+        select speciality_id, speciality_name, speciality_introduce, del_flag, create_by, create_time, update_by, update_time, remark from teach_speciality
+    </sql>
+
+    <select id="selectTeachSpecialityList" parameterType="TeachSpeciality" resultMap="TeachSpecialityResult">
+        <include refid="selectTeachSpecialityVo"/>
+        <where>  
+            <if test="specialityName != null  and specialityName != ''"> and speciality_name like concat('%', #{specialityName}, '%')</if>
+            <if test="specialityIntroduce != null  and specialityIntroduce != ''"> and speciality_introduce = #{specialityIntroduce}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachSpecialityBySpecialityId" parameterType="Long" resultMap="TeachSpecialityResult">
+        <include refid="selectTeachSpecialityVo"/>
+        where speciality_id = #{specialityId}
+    </select>
+        
+    <insert id="insertTeachSpeciality" parameterType="TeachSpeciality" useGeneratedKeys="true" keyProperty="specialityId">
+        insert into teach_speciality
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="specialityName != null">speciality_name,</if>
+            <if test="specialityIntroduce != null">speciality_introduce,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="specialityName != null">#{specialityName},</if>
+            <if test="specialityIntroduce != null">#{specialityIntroduce},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachSpeciality" parameterType="TeachSpeciality">
+        update teach_speciality
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="specialityName != null">speciality_name = #{specialityName},</if>
+            <if test="specialityIntroduce != null">speciality_introduce = #{specialityIntroduce},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where speciality_id = #{specialityId}
+    </update>
+
+    <delete id="deleteTeachSpecialityBySpecialityId" parameterType="Long">
+        delete from teach_speciality where speciality_id = #{specialityId}
+    </delete>
+
+    <delete id="deleteTeachSpecialityBySpecialityIds" parameterType="String">
+        delete from teach_speciality where speciality_id in 
+        <foreach item="specialityId" collection="array" open="(" separator="," close=")">
+            #{specialityId}
+        </foreach>
+    </delete>
+</mapper>

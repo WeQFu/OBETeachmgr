@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachexecute.mapper.TeachQuizDataHeadMapper">
+    
+    <resultMap type="TeachQuizDataHead" id="TeachQuizDataHeadResult">
+        <result property="quizDataHeadId"    column="quiz_data_head_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="quizPublishId"    column="quiz_publish_id"    />
+        <result property="quizSemester"    column="quiz_semester"    />
+        <result property="paperId"    column="paper_id"    />
+        <result property="paperName"    column="paper_name"    />
+        <result property="questionContent"    column="question_content"    />
+        <result property="questionAnswer"    column="question_answer"    />
+        <result property="questionScore"    column="question_score"    />
+        <result property="paperWeight"    column="paper_weight"    />
+        <result property="quizTotalScore"    column="quiz_total_score"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="score1"    column="score1"    />
+        <result property="score2"    column="score2"    />
+        <result property="score3"    column="score3"    />
+        <result property="score4"    column="score4"    />
+    </resultMap>
+
+    <sql id="selectTeachQuizDataHeadVo">
+        select quiz_data_head_id, user_id, user_name, nick_name, dept_id, quiz_publish_id, quiz_semester, paper_id, paper_name, question_content, question_answer, question_score, paper_weight, quiz_total_score, del_flag, create_by, create_time, update_by, update_time, remark, score1, score2, score3, score4 from teach_quiz_data_head
+    </sql>
+
+    <select id="selectTeachQuizDataHeadList" parameterType="TeachQuizDataHead" resultMap="TeachQuizDataHeadResult">
+        <include refid="selectTeachQuizDataHeadVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="quizPublishId != null "> and quiz_publish_id = #{quizPublishId}</if>
+            <if test="quizSemester != null  and quizSemester != ''"> and quiz_semester = #{quizSemester}</if>
+            <if test="paperId != null "> and paper_id = #{paperId}</if>
+            <if test="paperName != null  and paperName != ''"> and paper_name like concat('%', #{paperName}, '%')</if>
+            <if test="questionContent != null  and questionContent != ''"> and question_content = #{questionContent}</if>
+            <if test="questionAnswer != null  and questionAnswer != ''"> and question_answer = #{questionAnswer}</if>
+            <if test="questionScore != null "> and question_score = #{questionScore}</if>
+            <if test="paperWeight != null "> and paper_weight = #{paperWeight}</if>
+            <if test="quizTotalScore != null "> and quiz_total_score = #{quizTotalScore}</if>
+            <if test="score1 != null "> and score1 = #{score1}</if>
+            <if test="score2 != null "> and score2 = #{score2}</if>
+            <if test="score3 != null "> and score3 = #{score3}</if>
+            <if test="score4 != null "> and score4 = #{score4}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachQuizDataHeadByQuizDataHeadId" parameterType="Long" resultMap="TeachQuizDataHeadResult">
+        <include refid="selectTeachQuizDataHeadVo"/>
+        where quiz_data_head_id = #{quizDataHeadId}
+    </select>
+        
+    <insert id="insertTeachQuizDataHead" parameterType="TeachQuizDataHead" useGeneratedKeys="true" keyProperty="quizDataHeadId">
+        insert into teach_quiz_data_head
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null and userName != ''">user_name,</if>
+            <if test="nickName != null and nickName != ''">nick_name,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="quizPublishId != null">quiz_publish_id,</if>
+            <if test="quizSemester != null">quiz_semester,</if>
+            <if test="paperId != null">paper_id,</if>
+            <if test="paperName != null">paper_name,</if>
+            <if test="questionContent != null">question_content,</if>
+            <if test="questionAnswer != null">question_answer,</if>
+            <if test="questionScore != null">question_score,</if>
+            <if test="paperWeight != null">paper_weight,</if>
+            <if test="quizTotalScore != null">quiz_total_score,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="score1 != null">score1,</if>
+            <if test="score2 != null">score2,</if>
+            <if test="score3 != null">score3,</if>
+            <if test="score4 != null">score4,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null and userName != ''">#{userName},</if>
+            <if test="nickName != null and nickName != ''">#{nickName},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="quizPublishId != null">#{quizPublishId},</if>
+            <if test="quizSemester != null">#{quizSemester},</if>
+            <if test="paperId != null">#{paperId},</if>
+            <if test="paperName != null">#{paperName},</if>
+            <if test="questionContent != null">#{questionContent},</if>
+            <if test="questionAnswer != null">#{questionAnswer},</if>
+            <if test="questionScore != null">#{questionScore},</if>
+            <if test="paperWeight != null">#{paperWeight},</if>
+            <if test="quizTotalScore != null">#{quizTotalScore},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="score1 != null">#{score1},</if>
+            <if test="score2 != null">#{score2},</if>
+            <if test="score3 != null">#{score3},</if>
+            <if test="score4 != null">#{score4},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachQuizDataHead" parameterType="TeachQuizDataHead">
+        update teach_quiz_data_head
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userName != null and userName != ''">user_name = #{userName},</if>
+            <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="quizPublishId != null">quiz_publish_id = #{quizPublishId},</if>
+            <if test="quizSemester != null">quiz_semester = #{quizSemester},</if>
+            <if test="paperId != null">paper_id = #{paperId},</if>
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="questionContent != null">question_content = #{questionContent},</if>
+            <if test="questionAnswer != null">question_answer = #{questionAnswer},</if>
+            <if test="questionScore != null">question_score = #{questionScore},</if>
+            <if test="paperWeight != null">paper_weight = #{paperWeight},</if>
+            <if test="quizTotalScore != null">quiz_total_score = #{quizTotalScore},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="score1 != null">score1 = #{score1},</if>
+            <if test="score2 != null">score2 = #{score2},</if>
+            <if test="score3 != null">score3 = #{score3},</if>
+            <if test="score4 != null">score4 = #{score4},</if>
+        </trim>
+        where quiz_data_head_id = #{quizDataHeadId}
+    </update>
+
+    <delete id="deleteTeachQuizDataHeadByQuizDataHeadId" parameterType="Long">
+        delete from teach_quiz_data_head where quiz_data_head_id = #{quizDataHeadId}
+    </delete>
+
+    <delete id="deleteTeachQuizDataHeadByQuizDataHeadIds" parameterType="String">
+        delete from teach_quiz_data_head where quiz_data_head_id in 
+        <foreach item="quizDataHeadId" collection="array" open="(" separator="," close=")">
+            #{quizDataHeadId}
+        </foreach>
+    </delete>
+</mapper>

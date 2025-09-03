@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachPracticePlanMapper">
+    
+    <resultMap type="TeachPracticePlan" id="TeachPracticePlanResult">
+        <result property="practicePlanId"    column="practice_plan_id"    />
+        <result property="practiceSemester"    column="practice_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="chapterId"    column="chapter_id"    />
+        <result property="chapterName"    column="chapter_name"    />
+        <result property="courseTargetId"    column="course_target_id"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="planNo"    column="plan_no"    />
+        <result property="practiceName"    column="practice_name"    />
+        <result property="practiceType"    column="practice_type"    />
+        <result property="practiceTarget"    column="practice_target"    />
+        <result property="practiceDescription"    column="practice_description"    />
+        <result property="practiceDuring"    column="practice_during"    />
+        <result property="weekNum"    column="week_num"    />
+        <result property="weekdayNum"    column="weekday_num"    />
+        <result property="clazzNum"    column="clazz_num"    />
+        <result property="clazzDay"    column="clazz_day"    />
+        <result property="orderNum"    column="order_num"    />
+        <result property="practiceWeight"    column="practice_weight"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachPracticePlanVo">
+        select practice_plan_id, practice_semester, course_id, course_name, chapter_id, chapter_name, course_target_id, course_target_name, plan_no, practice_name, practice_type, practice_target, practice_description, practice_during, week_num, weekday_num, clazz_num, clazz_day, order_num, practice_weight, del_flag, create_by, create_time, update_by, update_time, remark from teach_practice_plan
+    </sql>
+
+    <select id="selectTeachPracticePlanList" parameterType="TeachPracticePlan" resultMap="TeachPracticePlanResult">
+        <include refid="selectTeachPracticePlanVo"/>
+        <where>
+            <if test="practiceSemester != null  and practiceSemester != ''"> and practice_semester = #{practiceSemester}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="chapterId != null "> and chapter_id = #{chapterId}</if>
+            <if test="chapterName != null  and chapterName != ''"> and chapter_name like concat('%', #{chapterName}, '%')</if>
+            <if test="courseTargetId != null "> and course_target_id = #{courseTargetId}</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="planNo != null "> and plan_no = #{planNo}</if>
+            <if test="practiceName != null  and practiceName != ''"> and practice_name like concat('%', #{practiceName}, '%')</if>
+            <if test="practiceType != null "> and practice_type = #{practiceType}</if>
+            <if test="practiceTarget != null  and practiceTarget != ''"> and practice_target = #{practiceTarget}</if>
+            <if test="practiceDescription != null  and practiceDescription != ''"> and practice_description = #{practiceDescription}</if>
+            <if test="practiceDuring != null "> and practice_during = #{practiceDuring}</if>
+            <if test="weekNum != null "> and week_num = #{weekNum}</if>
+            <if test="weekdayNum != null "> and weekday_num = #{weekdayNum}</if>
+            <if test="clazzNum != null "> and clazz_num = #{clazzNum}</if>
+            <if test="clazzDay != null "> and clazz_day = #{clazzDay}</if>
+            <if test="orderNum != null "> and order_num = #{orderNum}</if>
+            <if test="practiceWeight != null "> and practice_weight = #{practiceWeight}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachPracticePlanByPracticePlanId" parameterType="Long" resultMap="TeachPracticePlanResult">
+        <include refid="selectTeachPracticePlanVo"/>
+        where practice_plan_id = #{practicePlanId}
+    </select>
+        
+    <insert id="insertTeachPracticePlan" parameterType="TeachPracticePlan" useGeneratedKeys="true" keyProperty="practicePlanId">
+        insert into teach_practice_plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="practiceSemester != null">practice_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="chapterId != null">chapter_id,</if>
+            <if test="chapterName != null">chapter_name,</if>
+            <if test="courseTargetId != null">course_target_id,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="planNo != null">plan_no,</if>
+            <if test="practiceName != null">practice_name,</if>
+            <if test="practiceType != null">practice_type,</if>
+            <if test="practiceTarget != null">practice_target,</if>
+            <if test="practiceDescription != null">practice_description,</if>
+            <if test="practiceDuring != null">practice_during,</if>
+            <if test="weekNum != null">week_num,</if>
+            <if test="weekdayNum != null">weekday_num,</if>
+            <if test="clazzNum != null">clazz_num,</if>
+            <if test="clazzDay != null">clazz_day,</if>
+            <if test="orderNum != null">order_num,</if>
+            <if test="practiceWeight != null">practice_weight,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="practiceSemester != null">#{practiceSemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="chapterId != null">#{chapterId},</if>
+            <if test="chapterName != null">#{chapterName},</if>
+            <if test="courseTargetId != null">#{courseTargetId},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="practiceName != null">#{practiceName},</if>
+            <if test="practiceType != null">#{practiceType},</if>
+            <if test="practiceTarget != null">#{practiceTarget},</if>
+            <if test="practiceDescription != null">#{practiceDescription},</if>
+            <if test="practiceDuring != null">#{practiceDuring},</if>
+            <if test="weekNum != null">#{weekNum},</if>
+            <if test="weekdayNum != null">#{weekdayNum},</if>
+            <if test="clazzNum != null">#{clazzNum},</if>
+            <if test="clazzDay != null">#{clazzDay},</if>
+            <if test="orderNum != null">#{orderNum},</if>
+            <if test="practiceWeight != null">#{practiceWeight},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachPracticePlan" parameterType="TeachPracticePlan">
+        update teach_practice_plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="practiceSemester != null">practice_semester = #{practiceSemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="chapterId != null">chapter_id = #{chapterId},</if>
+            <if test="chapterName != null">chapter_name = #{chapterName},</if>
+            <if test="courseTargetId != null">course_target_id = #{courseTargetId},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="planNo != null">plan_no = #{planNo},</if>
+            <if test="practiceName != null">practice_name = #{practiceName},</if>
+            <if test="practiceType != null">practice_type = #{practiceType},</if>
+            <if test="practiceTarget != null">practice_target = #{practiceTarget},</if>
+            <if test="practiceDescription != null">practice_description = #{practiceDescription},</if>
+            <if test="practiceDuring != null">practice_during = #{practiceDuring},</if>
+            <if test="weekNum != null">week_num = #{weekNum},</if>
+            <if test="weekdayNum != null">weekday_num = #{weekdayNum},</if>
+            <if test="clazzNum != null">clazz_num = #{clazzNum},</if>
+            <if test="clazzDay != null">clazz_day = #{clazzDay},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
+            <if test="practiceWeight != null">practice_weight = #{practiceWeight},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where practice_plan_id = #{practicePlanId}
+    </update>
+
+    <delete id="deleteTeachPracticePlanByPracticePlanId" parameterType="Long">
+        delete from teach_practice_plan where practice_plan_id = #{practicePlanId}
+    </delete>
+
+    <delete id="deleteTeachPracticePlanByPracticePlanIds" parameterType="String">
+        delete from teach_practice_plan where practice_plan_id in 
+        <foreach item="practicePlanId" collection="array" open="(" separator="," close=")">
+            #{practicePlanId}
+        </foreach>
+    </delete>
+</mapper>

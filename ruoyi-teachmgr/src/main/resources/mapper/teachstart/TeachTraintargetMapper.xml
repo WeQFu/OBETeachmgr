@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachstart.mapper.TeachTraintargetMapper">
+    
+    <resultMap type="TeachTraintarget" id="TeachTraintargetResult">
+        <result property="coursetargetId"    column="coursetarget_id"    />
+        <result property="instituteDeptId"    column="institute_dept_id"    />
+        <result property="instituteName"    column="institute_name"    />
+        <result property="spelityDeptId"    column="spelity_dept_id"    />
+        <result property="specialityName"    column="speciality_name"    />
+        <result property="trainTarget1Id"    column="train_target1_id"    />
+        <result property="trainTarget1Name"    column="train_target1_name"    />
+        <result property="trainTarget2Id"    column="train_target2_id"    />
+        <result property="trainTarget2Name"    column="train_target2_name"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="courseSemester"    column="course_semester"    />
+        <result property="coursetargetName"    column="coursetarget_name"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachTraintargetVo">
+        select coursetarget_id, institute_dept_id, institute_name, spelity_dept_id, speciality_name, train_target1_id, train_target1_name, train_target2_id, train_target2_name, course_id, course_name, course_semester, coursetarget_name, del_flag, create_by, create_time, update_by, update_time, remark from teach_traintarget
+    </sql>
+
+    <select id="selectTeachTraintargetList" parameterType="TeachTraintarget" resultMap="TeachTraintargetResult">
+        <include refid="selectTeachTraintargetVo"/>
+        <where>  
+            <if test="instituteDeptId != null "> and institute_dept_id = #{instituteDeptId}</if>
+            <if test="instituteName != null  and instituteName != ''"> and institute_name like concat('%', #{instituteName}, '%')</if>
+            <if test="spelityDeptId != null "> and spelity_dept_id = #{spelityDeptId}</if>
+            <if test="specialityName != null  and specialityName != ''"> and speciality_name like concat('%', #{specialityName}, '%')</if>
+            <if test="trainTarget1Id != null "> and train_target1_id = #{trainTarget1Id}</if>
+            <if test="trainTarget1Name != null  and trainTarget1Name != ''"> and train_target1_name like concat('%', #{trainTarget1Name}, '%')</if>
+            <if test="trainTarget2Id != null "> and train_target2_id = #{trainTarget2Id}</if>
+            <if test="trainTarget2Name != null  and trainTarget2Name != ''"> and train_target2_name like concat('%', #{trainTarget2Name}, '%')</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="courseSemester != null  and courseSemester != ''"> and course_semester = #{courseSemester}</if>
+            <if test="coursetargetName != null  and coursetargetName != ''"> and coursetarget_name like concat('%', #{coursetargetName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachTraintargetByCoursetargetId" parameterType="Long" resultMap="TeachTraintargetResult">
+        <include refid="selectTeachTraintargetVo"/>
+        where coursetarget_id = #{coursetargetId}
+    </select>
+        
+    <insert id="insertTeachTraintarget" parameterType="TeachTraintarget" useGeneratedKeys="true" keyProperty="coursetargetId">
+        insert into teach_traintarget
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="instituteDeptId != null">institute_dept_id,</if>
+            <if test="instituteName != null">institute_name,</if>
+            <if test="spelityDeptId != null">spelity_dept_id,</if>
+            <if test="specialityName != null">speciality_name,</if>
+            <if test="trainTarget1Id != null">train_target1_id,</if>
+            <if test="trainTarget1Name != null">train_target1_name,</if>
+            <if test="trainTarget2Id != null">train_target2_id,</if>
+            <if test="trainTarget2Name != null">train_target2_name,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="courseSemester != null">course_semester,</if>
+            <if test="coursetargetName != null">coursetarget_name,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="instituteDeptId != null">#{instituteDeptId},</if>
+            <if test="instituteName != null">#{instituteName},</if>
+            <if test="spelityDeptId != null">#{spelityDeptId},</if>
+            <if test="specialityName != null">#{specialityName},</if>
+            <if test="trainTarget1Id != null">#{trainTarget1Id},</if>
+            <if test="trainTarget1Name != null">#{trainTarget1Name},</if>
+            <if test="trainTarget2Id != null">#{trainTarget2Id},</if>
+            <if test="trainTarget2Name != null">#{trainTarget2Name},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="courseSemester != null">#{courseSemester},</if>
+            <if test="coursetargetName != null">#{coursetargetName},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachTraintarget" parameterType="TeachTraintarget">
+        update teach_traintarget
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instituteDeptId != null">institute_dept_id = #{instituteDeptId},</if>
+            <if test="instituteName != null">institute_name = #{instituteName},</if>
+            <if test="spelityDeptId != null">spelity_dept_id = #{spelityDeptId},</if>
+            <if test="specialityName != null">speciality_name = #{specialityName},</if>
+            <if test="trainTarget1Id != null">train_target1_id = #{trainTarget1Id},</if>
+            <if test="trainTarget1Name != null">train_target1_name = #{trainTarget1Name},</if>
+            <if test="trainTarget2Id != null">train_target2_id = #{trainTarget2Id},</if>
+            <if test="trainTarget2Name != null">train_target2_name = #{trainTarget2Name},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseSemester != null">course_semester = #{courseSemester},</if>
+            <if test="coursetargetName != null">coursetarget_name = #{coursetargetName},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where coursetarget_id = #{coursetargetId}
+    </update>
+
+    <delete id="deleteTeachTraintargetByCoursetargetId" parameterType="Long">
+        delete from teach_traintarget where coursetarget_id = #{coursetargetId}
+    </delete>
+
+    <delete id="deleteTeachTraintargetByCoursetargetIds" parameterType="String">
+        delete from teach_traintarget where coursetarget_id in 
+        <foreach item="coursetargetId" collection="array" open="(" separator="," close=")">
+            #{coursetargetId}
+        </foreach>
+    </delete>
+</mapper>

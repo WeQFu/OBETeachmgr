@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iotmgr.controlmgt.mapper.IotControlMapper">
+    
+    <resultMap type="IotControl" id="IotControlResult">
+        <result property="controlId"    column="control_id"    />
+        <result property="deviceId"    column="device_id"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="gatherFreq"    column="gather_freq"    />
+        <result property="gatherArea"    column="gather_area"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectIotControlVo">
+        select control_id, device_id, device_name, gather_freq, gather_area, start_time, end_time, del_flag, create_by, create_time, update_by, update_time, remark from iot_control
+    </sql>
+
+    <select id="selectIotControlList" parameterType="IotControl" resultMap="IotControlResult">
+        <include refid="selectIotControlVo"/>
+        <where>  
+            <if test="deviceId != null "> and device_id = #{deviceId}</if>
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="gatherFreq != null "> and gather_freq = #{gatherFreq}</if>
+            <if test="gatherArea != null  and gatherArea != ''"> and gather_area = #{gatherArea}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectIotControlByControlId" parameterType="Long" resultMap="IotControlResult">
+        <include refid="selectIotControlVo"/>
+        where control_id = #{controlId}
+    </select>
+        
+    <insert id="insertIotControl" parameterType="IotControl" useGeneratedKeys="true" keyProperty="controlId">
+        insert into iot_control
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">device_id,</if>
+            <if test="deviceName != null">device_name,</if>
+            <if test="gatherFreq != null">gather_freq,</if>
+            <if test="gatherArea != null">gather_area,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceId != null">#{deviceId},</if>
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="gatherFreq != null">#{gatherFreq},</if>
+            <if test="gatherArea != null">#{gatherArea},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIotControl" parameterType="IotControl">
+        update iot_control
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceId != null">device_id = #{deviceId},</if>
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="gatherFreq != null">gather_freq = #{gatherFreq},</if>
+            <if test="gatherArea != null">gather_area = #{gatherArea},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where control_id = #{controlId}
+    </update>
+
+    <delete id="deleteIotControlByControlId" parameterType="Long">
+        delete from iot_control where control_id = #{controlId}
+    </delete>
+
+    <delete id="deleteIotControlByControlIds" parameterType="String">
+        delete from iot_control where control_id in 
+        <foreach item="controlId" collection="array" open="(" separator="," close=")">
+            #{controlId}
+        </foreach>
+    </delete>
+</mapper>

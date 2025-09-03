@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachstart.mapper.TeachGraduationRequireMapper">
+    
+    <resultMap type="TeachGraduationRequire" id="TeachGraduationRequireResult">
+        <result property="graduRequireId"    column="gradu_require_id"    />
+        <result property="graduRequireName"    column="gradu_require_name"    />
+        <result property="graduRequireContent"    column="gradu_require_content"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachGraduationRequireVo">
+        select gradu_require_id, gradu_require_name, gradu_require_content, del_flag, create_by, create_time, update_by, update_time, remark from teach_graduation_require
+    </sql>
+
+    <select id="selectTeachGraduationRequireList" parameterType="TeachGraduationRequire" resultMap="TeachGraduationRequireResult">
+        <include refid="selectTeachGraduationRequireVo"/>
+        <where>  
+            <if test="graduRequireName != null  and graduRequireName != ''"> and gradu_require_name like concat('%', #{graduRequireName}, '%')</if>
+            <if test="graduRequireContent != null  and graduRequireContent != ''"> and gradu_require_content = #{graduRequireContent}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachGraduationRequireByGraduRequireId" parameterType="Long" resultMap="TeachGraduationRequireResult">
+        <include refid="selectTeachGraduationRequireVo"/>
+        where gradu_require_id = #{graduRequireId}
+    </select>
+        
+    <insert id="insertTeachGraduationRequire" parameterType="TeachGraduationRequire" useGeneratedKeys="true" keyProperty="graduRequireId">
+        insert into teach_graduation_require
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="graduRequireName != null">gradu_require_name,</if>
+            <if test="graduRequireContent != null">gradu_require_content,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="graduRequireName != null">#{graduRequireName},</if>
+            <if test="graduRequireContent != null">#{graduRequireContent},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachGraduationRequire" parameterType="TeachGraduationRequire">
+        update teach_graduation_require
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="graduRequireName != null">gradu_require_name = #{graduRequireName},</if>
+            <if test="graduRequireContent != null">gradu_require_content = #{graduRequireContent},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where gradu_require_id = #{graduRequireId}
+    </update>
+
+    <delete id="deleteTeachGraduationRequireByGraduRequireId" parameterType="Long">
+        delete from teach_graduation_require where gradu_require_id = #{graduRequireId}
+    </delete>
+
+    <delete id="deleteTeachGraduationRequireByGraduRequireIds" parameterType="String">
+        delete from teach_graduation_require where gradu_require_id in 
+        <foreach item="graduRequireId" collection="array" open="(" separator="," close=")">
+            #{graduRequireId}
+        </foreach>
+    </delete>
+</mapper>

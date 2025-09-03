@@ -1,0 +1,13 @@
+# 编辑器文件夹
+.vscode
+.idea
+
+# java 编译文件
+bin
+*.jar
+target
+
+#前端编译文件
+node_modules
+dist
+ruoyi-ui

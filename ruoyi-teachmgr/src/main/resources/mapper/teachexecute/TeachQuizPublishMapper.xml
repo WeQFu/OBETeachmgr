@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachexecute.mapper.TeachQuizPublishMapper">
+    
+    <resultMap type="TeachQuizPublish" id="TeachQuizPublishResult">
+        <result property="quizPublishId"    column="quiz_publish_id"    />
+        <result property="publishSemester"    column="publish_semester"    />
+        <result property="paperId"    column="paper_id"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="paperType"    column="paper_type"    />
+        <result property="paperName"    column="paper_name"    />
+        <result property="paperWeight"    column="paper_weight"    />
+        <result property="quizType"    column="quiz_type"    />
+        <result property="deptIds"    column="dept_ids"    />
+        <result property="publishStatus"    column="publish_status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTeachQuizPublishVo">
+        select quiz_publish_id, publish_semester, paper_id, course_id, course_name, paper_type, paper_name, paper_weight, quiz_type, dept_ids, publish_status, del_flag, create_by, create_time, update_by, update_time, remark from teach_quiz_publish
+    </sql>
+
+    <select id="selectTeachQuizPublishList" parameterType="TeachQuizPublish" resultMap="TeachQuizPublishResult">
+        <include refid="selectTeachQuizPublishVo"/>
+        <where>  
+            <if test="publishSemester != null  and publishSemester != ''"> and publish_semester = #{publishSemester}</if>
+            <if test="paperId != null "> and paper_id = #{paperId}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="paperType != null  and paperType != ''"> and paper_type = #{paperType}</if>
+            <if test="paperName != null  and paperName != ''"> and paper_name like concat('%', #{paperName}, '%')</if>
+            <if test="quizType != null  and quizType != ''"> and quiz_type = #{quizType}</if>
+            <if test="deptIds != null  and deptIds != ''"> and dept_ids = #{deptIds}</if>
+            <if test="publishStatus != null  and publishStatus != ''"> and publish_status = #{publishStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachQuizPublishByQuizPublishId" parameterType="Long" resultMap="TeachQuizPublishResult">
+        <include refid="selectTeachQuizPublishVo"/>
+        where quiz_publish_id = #{quizPublishId}
+    </select>
+        
+    <insert id="insertTeachQuizPublish" parameterType="TeachQuizPublish" useGeneratedKeys="true" keyProperty="quizPublishId">
+        insert into teach_quiz_publish
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="publishSemester != null">publish_semester,</if>
+            <if test="paperId != null">paper_id,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="paperType != null">paper_type,</if>
+            <if test="paperName != null">paper_name,</if>
+            <if test="paperWeight != null">paper_weight,</if>
+            <if test="quizType != null">quiz_type,</if>
+            <if test="deptIds != null">dept_ids,</if>
+            <if test="publishStatus != null">publish_status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="publishSemester != null">#{publishSemester},</if>
+            <if test="paperId != null">#{paperId},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="paperType != null">#{paperType},</if>
+            <if test="paperName != null">#{paperName},</if>
+            <if test="paperWeight != null">#{paperWeight},</if>
+            <if test="quizType != null">#{quizType},</if>
+            <if test="deptIds != null">#{deptIds},</if>
+            <if test="publishStatus != null">#{publishStatus},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachQuizPublish" parameterType="TeachQuizPublish">
+        update teach_quiz_publish
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="publishSemester != null">publish_semester = #{publishSemester},</if>
+            <if test="paperId != null">paper_id = #{paperId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="paperType != null">paper_type = #{paperType},</if>
+            <if test="paperName != null">paper_name = #{paperName},</if>
+            <if test="paperWeight != null">paper_weight = #{paperWeight},</if>
+            <if test="quizType != null">quiz_type = #{quizType},</if>
+            <if test="deptIds != null">dept_ids = #{deptIds},</if>
+            <if test="publishStatus != null">publish_status = #{publishStatus},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where quiz_publish_id = #{quizPublishId}
+    </update>
+
+    <delete id="deleteTeachQuizPublishByQuizPublishId" parameterType="Long">
+        delete from teach_quiz_publish where quiz_publish_id = #{quizPublishId}
+    </delete>
+
+    <delete id="deleteTeachQuizPublishByQuizPublishIds" parameterType="String">
+        delete from teach_quiz_publish where quiz_publish_id in 
+        <foreach item="quizPublishId" collection="array" open="(" separator="," close=")">
+            #{quizPublishId}
+        </foreach>
+    </delete>
+</mapper>

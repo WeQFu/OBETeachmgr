@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachplan.mapper.TeachCourseChapterMapper">
+    
+    <resultMap type="TeachCourseChapter" id="TeachCourseChapterResult">
+        <result property="courseChapterId"    column="course_chapter_id"    />
+        <result property="courseSemester"    column="course_semester"    />
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="courseChapterName"    column="course_chapter_name"    />
+        <result property="courseChapterDescribe"    column="course_chapter_describe"    />
+        <result property="courseTargetId"    column="course_target_id"    />
+        <result property="courseTargetName"    column="course_target_name"    />
+        <result property="planTime"    column="plan_time"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <resultMap id="TeachCourseChapterTeachCourseChapterSubResult" type="TeachCourseChapter" extends="TeachCourseChapterResult">
+        <collection property="teachCourseChapterSubList" notNullColumn="sub_chapter_sub_id" javaType="java.util.List" resultMap="TeachCourseChapterSubResult" />
+    </resultMap>
+
+    <resultMap type="TeachCourseChapterSub" id="TeachCourseChapterSubResult">
+        <result property="chapterSubId"    column="sub_chapter_sub_id"    />
+        <result property="chapterId"    column="sub_chapter_id"    />
+        <result property="chapterName"    column="sub_chapter_name"    />
+        <result property="chapterSubName"    column="sub_chapter_sub_name"    />
+        <result property="chapterSubDescribe"    column="sub_chapter_sub_describe"    />
+        <result property="courseTargetId"    column="sub_course_target_id"    />
+        <result property="courseTargetName"    column="sub_course_target_name"    />
+        <result property="planTime"    column="sub_plan_time"    />
+    </resultMap>
+
+    <sql id="selectTeachCourseChapterVo">
+        select course_chapter_id, course_semester, course_id, course_name, course_chapter_name, course_chapter_describe, course_target_id, course_target_name, plan_time, del_flag, create_by, create_time, update_by, update_time, remark from teach_course_chapter
+    </sql>
+
+    <select id="selectTeachCourseChapterList" parameterType="TeachCourseChapter" resultMap="TeachCourseChapterResult">
+        <include refid="selectTeachCourseChapterVo"/>
+        <where>  
+            <if test="courseSemester != null  and courseSemester != ''"> and course_semester = #{courseSemester}</if>
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="courseChapterName != null  and courseChapterName != ''"> and course_chapter_name like concat('%', #{courseChapterName}, '%')</if>
+            <if test="courseChapterDescribe != null  and courseChapterDescribe != ''"> and course_chapter_describe = #{courseChapterDescribe}</if>
+            <if test="courseTargetId != null "> and course_target_id = #{courseTargetId}</if>
+            <if test="courseTargetName != null  and courseTargetName != ''"> and course_target_name like concat('%', #{courseTargetName}, '%')</if>
+            <if test="planTime != null "> and plan_time = #{planTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectTeachCourseChapterByCourseChapterId" parameterType="Long" resultMap="TeachCourseChapterTeachCourseChapterSubResult">
+        select a.course_chapter_id, a.course_semester, a.course_id, a.course_name, a.course_chapter_name, a.course_chapter_describe, a.course_target_id, a.course_target_name, a.plan_time, a.del_flag, a.create_by, a.create_time, a.update_by, a.update_time, a.remark,
+ b.chapter_sub_id as sub_chapter_sub_id, b.chapter_id as sub_chapter_id, b.chapter_name as sub_chapter_name, b.chapter_sub_name as sub_chapter_sub_name, b.chapter_sub_describe as sub_chapter_sub_describe, b.course_target_id as sub_course_target_id, b.course_target_name as sub_course_target_name, b.plan_time as sub_plan_time
+        from teach_course_chapter a
+        left join teach_course_chapter_sub b on b.chapter_id = a.course_chapter_id
+        where a.course_chapter_id = #{courseChapterId}
+    </select>
+        
+    <insert id="insertTeachCourseChapter" parameterType="TeachCourseChapter" useGeneratedKeys="true" keyProperty="courseChapterId">
+        insert into teach_course_chapter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester,</if>
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="courseChapterName != null">course_chapter_name,</if>
+            <if test="courseChapterDescribe != null">course_chapter_describe,</if>
+            <if test="courseTargetId != null">course_target_id,</if>
+            <if test="courseTargetName != null">course_target_name,</if>
+            <if test="planTime != null">plan_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseSemester != null">#{courseSemester},</if>
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="courseChapterName != null">#{courseChapterName},</if>
+            <if test="courseChapterDescribe != null">#{courseChapterDescribe},</if>
+            <if test="courseTargetId != null">#{courseTargetId},</if>
+            <if test="courseTargetName != null">#{courseTargetName},</if>
+            <if test="planTime != null">#{planTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTeachCourseChapter" parameterType="TeachCourseChapter">
+        update teach_course_chapter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseSemester != null">course_semester = #{courseSemester},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="courseChapterName != null">course_chapter_name = #{courseChapterName},</if>
+            <if test="courseChapterDescribe != null">course_chapter_describe = #{courseChapterDescribe},</if>
+            <if test="courseTargetId != null">course_target_id = #{courseTargetId},</if>
+            <if test="courseTargetName != null">course_target_name = #{courseTargetName},</if>
+            <if test="planTime != null">plan_time = #{planTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where course_chapter_id = #{courseChapterId}
+    </update>
+
+    <delete id="deleteTeachCourseChapterByCourseChapterId" parameterType="Long">
+        delete from teach_course_chapter where course_chapter_id = #{courseChapterId}
+    </delete>
+
+    <delete id="deleteTeachCourseChapterByCourseChapterIds" parameterType="String">
+        delete from teach_course_chapter where course_chapter_id in 
+        <foreach item="courseChapterId" collection="array" open="(" separator="," close=")">
+            #{courseChapterId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteTeachCourseChapterSubByChapterIds" parameterType="String">
+        delete from teach_course_chapter_sub where chapter_id in 
+        <foreach item="chapterId" collection="array" open="(" separator="," close=")">
+            #{chapterId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteTeachCourseChapterSubByChapterId" parameterType="Long">
+        delete from teach_course_chapter_sub where chapter_id = #{chapterId}
+    </delete>
+
+    <insert id="batchTeachCourseChapterSub">
+        insert into teach_course_chapter_sub( chapter_sub_id, chapter_id, chapter_name, chapter_sub_name, chapter_sub_describe, course_target_id, course_target_name, plan_time) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.chapterSubId}, #{item.chapterId}, #{item.chapterName}, #{item.chapterSubName}, #{item.chapterSubDescribe}, #{item.courseTargetId}, #{item.courseTargetName}, #{item.planTime})
+        </foreach>
+    </insert>
+</mapper>

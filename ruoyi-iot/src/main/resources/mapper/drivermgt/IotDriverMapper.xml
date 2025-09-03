@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iotmgr.drivermgt.mapper.IotDriverMapper">
+    
+    <resultMap type="IotDriver" id="IotDriverResult">
+        <result property="driverId"    column="driver_id"    />
+        <result property="driverName"    column="driver_name"    />
+        <result property="serviceName"    column="service_name"    />
+        <result property="host"    column="host"    />
+        <result property="port"    column="port"    />
+        <result property="description"    column="description"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="tenant"    column="tenant"    />
+        <result property="deleted"    column="deleted"    />
+    </resultMap>
+
+    <sql id="selectIotDriverVo">
+        select driver_id, driver_name, service_name, host, port, description, create_time, update_time, tenant, deleted from iot_driver
+    </sql>
+
+    <select id="selectIotDriverList" parameterType="IotDriver" resultMap="IotDriverResult">
+        <include refid="selectIotDriverVo"/>
+        <where>  
+            <if test="driverName != null  and driverName != ''"> and driver_name like concat('%', #{driverName}, '%')</if>
+            <if test="serviceName != null  and serviceName != ''"> and service_name like concat('%', #{serviceName}, '%')</if>
+            <if test="host != null  and host != ''"> and host = #{host}</if>
+            <if test="port != null "> and port = #{port}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="tenant != null  and tenant != ''"> and tenant = #{tenant}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+        </where>
+    </select>
+    
+    <select id="selectIotDriverByDriverId" parameterType="Long" resultMap="IotDriverResult">
+        <include refid="selectIotDriverVo"/>
+        where driver_id = #{driverId}
+    </select>
+        
+    <insert id="insertIotDriver" parameterType="IotDriver" useGeneratedKeys="true" keyProperty="driverId">
+        insert into iot_driver
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="driverName != null and driverName != ''">driver_name,</if>
+            <if test="serviceName != null and serviceName != ''">service_name,</if>
+            <if test="host != null and host != ''">host,</if>
+            <if test="port != null">port,</if>
+            <if test="description != null">description,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="tenant != null and tenant != ''">tenant,</if>
+            <if test="deleted != null">deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="driverName != null and driverName != ''">#{driverName},</if>
+            <if test="serviceName != null and serviceName != ''">#{serviceName},</if>
+            <if test="host != null and host != ''">#{host},</if>
+            <if test="port != null">#{port},</if>
+            <if test="description != null">#{description},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="tenant != null and tenant != ''">#{tenant},</if>
+            <if test="deleted != null">#{deleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIotDriver" parameterType="IotDriver">
+        update iot_driver
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="driverName != null and driverName != ''">driver_name = #{driverName},</if>
+            <if test="serviceName != null and serviceName != ''">service_name = #{serviceName},</if>
+            <if test="host != null and host != ''">host = #{host},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="tenant != null and tenant != ''">tenant = #{tenant},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+        </trim>
+        where driver_id = #{driverId}
+    </update>
+
+    <delete id="deleteIotDriverByDriverId" parameterType="Long">
+        delete from iot_driver where driver_id = #{driverId}
+    </delete>
+
+    <delete id="deleteIotDriverByDriverIds" parameterType="String">
+        delete from iot_driver where driver_id in 
+        <foreach item="driverId" collection="array" open="(" separator="," close=")">
+            #{driverId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.teachmgr.teachquiz.mapper.ExamPaperTreeMapper">
+    
+    <resultMap type="ExamPaperTree" id="ExamPaperTreeResult">
+        <result property="paperTreeId"    column="paper_tree_id"    />
+        <result property="paperTreePid"    column="paper_tree_pid"    />
+        <result property="papertreeleaf"    column="papertreeleaf"    />
+        <result property="paperSemester"    column="paper_semester"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="paperId"    column="paper_id"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectExamPaperTreeVo">
+        select paper_tree_id, paper_tree_pid, papertreeleaf, paper_semester, course_name, paper_id, del_flag, create_by, create_time, update_by, update_time, remark from exam_paper_tree
+    </sql>
+
+    <select id="selectExamPaperTreeList" parameterType="ExamPaperTree" resultMap="ExamPaperTreeResult">
+        <include refid="selectExamPaperTreeVo"/>
+        <where>  
+            <if test="paperTreePid != null "> and paper_tree_pid = #{paperTreePid}</if>
+            <if test="papertreeleaf != null  and papertreeleaf != ''"> and papertreeleaf = #{papertreeleaf}</if>
+            <if test="paperSemester != null  and paperSemester != ''"> and paper_semester = #{paperSemester}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="paperId != null "> and paper_id = #{paperId}</if>
+        </where>
+    </select>
+    
+    <select id="selectExamPaperTreeByPaperTreeId" parameterType="Long" resultMap="ExamPaperTreeResult">
+        <include refid="selectExamPaperTreeVo"/>
+        where paper_tree_id = #{paperTreeId}
+    </select>
+        
+    <insert id="insertExamPaperTree" parameterType="ExamPaperTree" useGeneratedKeys="true" keyProperty="paperTreeId">
+        insert into exam_paper_tree
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paperTreePid != null">paper_tree_pid,</if>
+            <if test="papertreeleaf != null">papertreeleaf,</if>
+            <if test="paperSemester != null">paper_semester,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="paperId != null">paper_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paperTreePid != null">#{paperTreePid},</if>
+            <if test="papertreeleaf != null">#{papertreeleaf},</if>
+            <if test="paperSemester != null">#{paperSemester},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="paperId != null">#{paperId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateExamPaperTree" parameterType="ExamPaperTree">
+        update exam_paper_tree
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paperTreePid != null">paper_tree_pid = #{paperTreePid},</if>
+            <if test="papertreeleaf != null">papertreeleaf = #{papertreeleaf},</if>
+            <if test="paperSemester != null">paper_semester = #{paperSemester},</if>
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="paperId != null">paper_id = #{paperId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where paper_tree_id = #{paperTreeId}
+    </update>
+
+    <delete id="deleteExamPaperTreeByPaperTreeId" parameterType="Long">
+        delete from exam_paper_tree where paper_tree_id = #{paperTreeId}
+    </delete>
+
+    <delete id="deleteExamPaperTreeByPaperTreeIds" parameterType="String">
+        delete from exam_paper_tree where paper_tree_id in 
+        <foreach item="paperTreeId" collection="array" open="(" separator="," close=")">
+            #{paperTreeId}
+        </foreach>
+    </delete>
+</mapper>
